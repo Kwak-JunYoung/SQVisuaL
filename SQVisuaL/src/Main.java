@@ -12,6 +12,13 @@ public class Main {
 //		f.setLocation((int)(size.getWidth() / 4), (int)(size.getHeight() / 4));
 //		f.setLayout(null);
 //		f.setVisible(true);
+		try {
+			Class.forName("org.sqlite.JDBC");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Class loading failed. Exiting.");
+			s.close();
+			return;
+		}
 		while(!sql.isConnected()) {
 			do {
 				System.out.println("Please choose a database type:");
@@ -21,13 +28,6 @@ public class Main {
 			ArrayList<String> cred = new ArrayList<>();
 			if(sql.getDPType() == "SQLite") {
 				cred.add(null);
-				try {
-					Class.forName("org.sqlite.JDBC");
-				} catch (ClassNotFoundException e) {
-					System.out.println("Class loading failed. Exiting.");
-					s.close();
-					return;
-				}
 				do {
 					System.out.println("You have chosen SQLite DB.");
 					System.out.println("Please enter the SQLite file you wish to open.");
