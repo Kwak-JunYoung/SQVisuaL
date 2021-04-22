@@ -25,5 +25,12 @@ public class SQVisuaL {
 	}
 	public void setCred(ArrayList<String> cred) {
 		if(this.dp instanceof SQLite) ((SQLite) this.dp).setPath(cred.get(0));
+		else if(this.dp instanceof MySQL) {
+			((MySQL) this.dp).setHost(cred.get(0));
+			((MySQL) this.dp).setPort(Integer.valueOf(cred.get(1)));
+			((MySQL) this.dp).setDB(cred.get(2));
+			((MySQL) this.dp).setUsername(cred.get(3));
+			((MySQL) this.dp).setPassword(cred.get(4));
+		}
 	}
 }
