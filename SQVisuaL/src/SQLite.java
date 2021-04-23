@@ -35,7 +35,7 @@ public class SQLite extends DataProvider{
 		}
 	}
 	@Override
-	public ResultSet query() {
+	public ResultSet query(String q) {
 		// TODO Auto-generated method stub
 		return null;
 	}
