@@ -30,7 +30,17 @@ public final class MySQL extends DataProvider {
 		}
 	}
 	
-	
+	public ResultSet query(String q) {
+		try {
+			Statement s = this.c.createStatement(); //TODO: Use prepareStatements to sanitise inputs. https://stackoverflow.com/questions/1812891/java-escape-string-to-prevent-sql-injection
+			ResultSet r = s.executeQuery(q);
+			return r;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}  
+		
+	}
 	
 	public void setHost(String host) {
 		this.host = host;
