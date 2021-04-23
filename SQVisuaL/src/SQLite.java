@@ -34,6 +34,11 @@ public class SQLite extends DataProvider{
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public ResultSet query() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 
 /* To import library
