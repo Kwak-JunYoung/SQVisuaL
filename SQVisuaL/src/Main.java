@@ -1,19 +1,14 @@
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		SQVisuaL sql = new SQVisuaL();
 		Scanner s = new Scanner(System.in);
-		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-		System.out.println(size);
-//		Frame f = new Frame();
-//		f.setSize((int)(size.getWidth() / 2), (int)(size.getHeight() / 2));
-//		f.setLocation((int)(size.getWidth() / 4), (int)(size.getHeight() / 4));
-//		f.setLayout(null);
-//		f.setVisible(true);
+		//Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+		//System.out.println(size);
 		try {
 			Class.forName("org.sqlite.JDBC");
+			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Class loading failed. Exiting.");
 			s.close();
