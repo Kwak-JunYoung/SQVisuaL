@@ -1,5 +1,6 @@
 import java.sql.*;  
 public final class MySQL extends DataProvider {
+	Connection c;
 	String host;
 	int port;
 	String db;
@@ -8,14 +9,25 @@ public final class MySQL extends DataProvider {
 
 	@Override
 	public boolean connect() {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			this.c = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.db, this.username, this.password);
+			System.out.println("Connection to MySQL database has been established.");
+            this.isOpen = true;
+            return true;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
+		try {
+			this.c.close();
+			this.isOpen = false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
