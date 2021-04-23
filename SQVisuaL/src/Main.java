@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.sql.*;
 public class Main {
 	public static void main(String[] args) {
 		SQVisuaL sql = new SQVisuaL();
@@ -34,20 +35,30 @@ public class Main {
 				for(int i = 0; i < 5; i++) cred.add(null);
 				do {
 					System.out.println("You have chosen MySQL DB.");
-					System.out.println("Please enter the hostname.");
+					System.out.println("Please enter the hostname."); //covrt.co
 					cred.set(0, s.nextLine());
 					System.out.println("Please enter the port number. (Default is 3306)");
 					b = s.nextLine();
 					if(b.length() == 0) b = "3306";
 					cred.set(1, b);
-					System.out.println("Please enter the database name.");
+					System.out.println("Please enter the database name."); //javaprojectdb
 					cred.set(2, s.nextLine());
-					System.out.println("Please enter the username.");
+					System.out.println("Please enter the username."); //javaproject
 					cred.set(3, s.nextLine());
-					System.out.println("Please enter the password.");
+					System.out.println("Please enter the password."); //javaproject
 					cred.set(4, s.nextLine());
 					sql.setCred(cred);
 				} while(!sql.connect());
+				ResultSet r = sql.getProvider().query("SELECT * FROM `shoppinglist`"); //Temporary test code
+				if(r != null) {
+					try {
+						while(r.next()) {
+							System.out.println(r.getInt(1) + " " + r.getString(2) + " " + r.getInt(3) + " " + r.getDouble(4));  
+						}
+					} catch(SQLException e) {
+						
+					}
+				}
 			}
 		}
 		System.out.println("Goodbye.");
