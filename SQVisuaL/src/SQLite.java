@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class SQLite extends DataProvider{
 	String path;
-	Connection c;
+	//Connection c;
 	public SQLite() {
 		this.isOpen = false;
 		this.path = null;

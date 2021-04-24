@@ -1,6 +1,6 @@
 import java.sql.*;  
 public final class MySQL extends DataProvider {
-	Connection c;
+	//Connection c;
 	String host;
 	int port;
 	String db;

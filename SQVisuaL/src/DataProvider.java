@@ -1,6 +1,7 @@
 import java.sql.*;
 public abstract class DataProvider {
 	boolean isOpen;
+	Connection c;
 	public boolean isOpen() {
 		return this.isOpen;
 	}
