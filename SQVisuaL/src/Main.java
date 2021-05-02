@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.*;
@@ -6,7 +7,7 @@ public class Main {
 		SQVisuaL sql = new SQVisuaL();
 		Scanner s = new Scanner(System.in);
 		String b;
-		//Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+		JFrame f = new JFrame();
 		//System.out.println(size);
 		try {
 			Class.forName("org.sqlite.JDBC");
