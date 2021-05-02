@@ -8,7 +8,7 @@ public class Main {
 		Scanner s = new Scanner(System.in);
 		String b;
 		JFrame f = new JFrame();
-		//System.out.println(size);
+		System.out.println("Test");
 		try {
 			Class.forName("org.sqlite.JDBC");
 			//Class.forName("com.mysql.jdbc.Driver");
