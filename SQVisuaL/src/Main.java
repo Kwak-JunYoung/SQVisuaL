@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.sql.*;
@@ -7,89 +6,29 @@ public class Main {
 		SQVisuaL sql = new SQVisuaL();
 		Scanner s = new Scanner(System.in);
 		String b;
-		JFrame f = new JFrame();
-	    /*JFrame f=new JFrame("SQVisuaL");
-	    JLabel l;
-	    
-	    l = new JLabel("Please select your database type");
-	    l.setBounds(40,20,200,30);
-	    f.add(l);
-	    
-	    JButton MySQL_B=new JButton("MySQL");  
-	    MySQL_B.setBounds(5,130,100,30);  
-	    f.add(MySQL_B);
-	    
-	    JButton SQLite_B=new JButton("SQLite");  
-	    SQLite_B.setBounds(180,130,100,30);  
-	    f.add(SQLite_B);
-	    
-	    f.setSize(300,200);  
-	    f.setLayout(null);  
-	    f.setVisible(true);*/  
-		
-	   /* JFrame f=new JFrame("SQVisuaL-MySQL");
-	    JLabel l;
-	    JTextField t1, t2, t3, t4, t5;
-	    
-	    l = new JLabel("Hostname");
-	    l.setBounds(40,20,100,30);
-	    f.add(l);
-	    
-	    t1 = new JTextField("covrt.co");
-	    t1.setBounds(140, 20, 150, 30);
-	    f.add(t1);
-	    
-	    l = new JLabel("Port");
-	    l.setBounds(40,60,100,30);
-	    f.add(l);
-	    
-	    t2 = new JTextField("3306");
-	    t2.setBounds(140, 60, 150, 30);
-	    f.add(t2);
-	    
-	    l = new JLabel("Username");
-	    l.setBounds(40,100,100,30);
-	    f.add(l);
-	    
-	    t1 = new JTextField("javaproject");
-	    t1.setBounds(140, 100, 150, 30);
-	    f.add(t1);
-	    
-	    l = new JLabel("Password");
-	    l.setBounds(40,140,100,30);
-	    f.add(l);
-	    
-	    t1 = new JTextField("*********** (javaproject)");
-	    t1.setBounds(140, 140, 150, 30);
-	    f.add(t1);
-	    
-	    l = new JLabel("Database Name");
-	    l.setBounds(40,180,100,30);
-	    f.add(l);
-	    
-	    t1 = new JTextField("javaprojectdb");
-	    t1.setBounds(140, 180, 150, 30);
-	    f.add(t1);
-	    
-	    JButton MySQL_B=new JButton("MySQL");  
-	    MySQL_B.setBounds(5,290,100,30);  
-	    f.add(MySQL_B);
-	    
-	    JButton SQLite_B=new JButton("SQLite");  
-	    SQLite_B.setBounds(250,290,100,30);  
-	    f.add(SQLite_B);
-	    
-	    f.setSize(410,400);  
-	    f.setLayout(null);  
-	    f.setVisible(true); */ 
-		try {
-			Class.forName("org.sqlite.JDBC");
-			//Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Class loading failed. Exiting.");
-			s.close();
-			return;
+		StartFrame st = new StartFrame();
+		st.setVisible();
+		if(true) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				System.out.println("Class loading failed. Exiting.");
+				s.close();
+				return;
+			}
+			MySQLConnFrame f = new MySQLConnFrame();
+			f.setVisible();
+		} else {
+			try {
+				Class.forName("org.sqlite.JDBC");
+			} catch (ClassNotFoundException e) {
+				System.out.println("Class loading failed. Exiting.");
+				s.close();
+				return;
+			}
+			//SQLiteConnFrame f = new SQLiteConnFrame();
 		}
+		
 		while(!sql.isConnected()) {
 			do {
 				System.out.println("Please choose a database type:");
