@@ -10,12 +10,13 @@ public final class MySQL extends DataProvider {
 	@Override
 	public boolean connect() {
 		try {
-			this.c = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.db, this.username, this.password);
-			System.out.println("Connection to MySQL database has been established.");
+			String uri = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.db;
+			this.c = DriverManager.getConnection(uri, this.username, this.password);
+			//System.out.println("Connection to MySQL database has been established.");
             this.isOpen = true;
             return true;
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}

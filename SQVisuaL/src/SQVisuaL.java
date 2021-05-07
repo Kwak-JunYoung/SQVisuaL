@@ -11,9 +11,9 @@ public class SQVisuaL {
 	public boolean isConnected() {
 		return (this.dp != null && this.dp.isOpen());
 	}
-	public boolean setProvider(int type) {
-		if(type == 1) this.dp = new SQLite();
-		else if(type == 2) this.dp = new MySQL();
+	public boolean setProvider(String type) {
+		if(type.equals("SQLite")) this.dp = new SQLite();
+		else if(type.equals("MySQL")) this.dp = new MySQL();
 		return this.dp != null;
 	}
 	public String getDPType() {
