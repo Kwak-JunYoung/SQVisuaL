@@ -1,4 +1,4 @@
-
-public class QueryBuilder {
-
+abstract class QueryBuilder {
+	abstract String buildQuery();
+	abstract void addParam();
 }

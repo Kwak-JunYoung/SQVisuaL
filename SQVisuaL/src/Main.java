@@ -1,3 +1,5 @@
+import java.awt.EventQueue;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,8 +8,19 @@ public class Main {
 		SQVisuaL sql = new SQVisuaL();
 		//Scanner s = new Scanner(System.in);
 		String b;
-		StartFrame st = new StartFrame();
-		st.setVisible();		
+		//StartFrame st = new StartFrame();
+				
+		
+		try {
+			EventQueue.invokeAndWait(new Runnable() {
+				public void run() {
+					StartFrame st = new StartFrame();
+					st.setVisible();
+				}
+			});
+		} catch (InvocationTargetException | InterruptedException e) {
+			e.printStackTrace();
+		}
 		while(!sql.isConnected()) {
 			/*do {
 				System.out.println("Please choose a database type:");

@@ -1,4 +1,7 @@
-
-public abstract class Constraint {
-
+abstract class Constraint {
+	String table;
+	String attr;
+	String type;
+	int compareTo;
+	public abstract String toString();
 }
