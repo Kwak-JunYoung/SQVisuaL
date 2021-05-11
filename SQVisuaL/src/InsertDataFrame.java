@@ -21,7 +21,7 @@ class InsertDataFrame extends JFrame {
 	public JTable table;
 	public JList tables;
 	public InsertDataFrame(ArrayList<String> t) {
-		this.super("SQVisuaL - Insert new data")
+		super("SQVisuaL - Insert new data");
 		this.tableSelected = false;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
