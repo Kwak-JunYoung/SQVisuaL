@@ -3,11 +3,6 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 

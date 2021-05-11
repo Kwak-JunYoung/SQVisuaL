@@ -8,7 +8,6 @@ public class Main {
 		SQVisuaL sql = new SQVisuaL();
 		String b;
 		MainFrame mf = new MainFrame();
-		mf.setVisible(true);
 		StartFrame st = new StartFrame();
 		st.setVisible(true);
 		MySQLConnFrame mscf = new MySQLConnFrame();
@@ -45,6 +44,7 @@ public class Main {
 		    	sql.connect();
 		    	System.out.println(sql.isConnected());
 		    	if(sql.connect()) {
+		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
 		    		ResultSet r = sql.getProvider().query("SELECT * FROM `shoppinglist`"); //Temporary test code
 					if(r != null) {
@@ -76,6 +76,7 @@ public class Main {
 		    	sql.connect();
 		    	System.out.println(sql.isConnected());
 		    	if(sql.connect()) {
+		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
 		    		ResultSet r = sql.getProvider().query("SELECT * FROM `chinook`"); //Temporary test code
 					if(r != null) {
