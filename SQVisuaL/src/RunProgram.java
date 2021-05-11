@@ -103,8 +103,7 @@ public class RunProgram {
 		});
 		mf.insertData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(idf == null) System.out.println("Error: There are no tables in the database!");
-				else idf.setVisible(true);
+				idf.setVisible(true);
 			}
 		});
 	}
