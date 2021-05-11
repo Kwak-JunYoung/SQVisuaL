@@ -12,6 +12,8 @@ public class Main {
 		st.setVisible(true);
 		MySQLConnFrame mscf = new MySQLConnFrame();
 		SQLiteConnFrame slcf = new SQLiteConnFrame();
+		SearchDataFrame sdf = new SearchDataFrame();
+		InsertDataFrame idf = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		        st.setVisible(false);
@@ -91,6 +93,16 @@ public class Main {
 		    	}
 		    	slcf.setEnabled(true);
 		    }
+		});
+		mf.searchData.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sdf.setVisible(true);
+			}
+		});
+		mf.insertData.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				idf.setVisible(true);
+			}
 		});
 	}
 	public static void testF() {
