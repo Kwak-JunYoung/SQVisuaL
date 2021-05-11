@@ -16,6 +16,7 @@ public class MainFrame extends JFrame {
 	public JButton newTable, searchData, insertData;
 	private JLabel label;
 	private JLabel label_1;
+	private JLabel lblNewLabel;
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -51,6 +52,9 @@ public class MainFrame extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.NORTH);
+		
+		lblNewLabel = new JLabel("Query that was executed recently will show up here");
+		panel_2.add(lblNewLabel);
 	}
 
 }
