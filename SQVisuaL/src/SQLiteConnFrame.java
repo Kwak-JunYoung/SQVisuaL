@@ -7,53 +7,36 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class SQLiteConnFrame extends JFrame {
-	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SQLiteConnFrame frame = new SQLiteConnFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	public JTextField file;
+	public JButton cancel, confirm;
 	public SQLiteConnFrame() {
+		super("SQVisuaL - SQLite");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(null);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JButton btnNewButton = new JButton("Cancel");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setBounds(42, 175, 136, 65);
-		getContentPane().add(btnNewButton, BorderLayout.WEST);
+		JPanel panel = new JPanel();
+		getContentPane().add(panel, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_1 = new JButton("Confirm");
-		btnNewButton_1.setBounds(260, 175, 136, 65);
-		getContentPane().add(btnNewButton_1);
+		cancel = new JButton("Cancel");
+		panel.add(cancel);
+		
+		confirm = new JButton("Confirm");
+		panel.add(confirm);
+		
+		JPanel panel_1 = new JPanel();
+		getContentPane().add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JLabel lblNewLabel = new JLabel("File Location");
-		lblNewLabel.setBounds(42, 80, 91, 15);
-		getContentPane().add(lblNewLabel);
+		panel_1.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(145, 77, 251, 21);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		file = new JTextField();
+		panel_1.add(file);
+		file.setColumns(10);
 	}
 }

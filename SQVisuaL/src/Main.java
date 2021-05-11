@@ -60,34 +60,37 @@ public class Main {
 		    	mscf.setEnabled(true);
 		    }
 		});
-		/*try {
-			EventQueue.invokeAndWait(new Runnable() {
-				public void run() {
-					
-				}
-			});
-		} catch (InvocationTargetException | InterruptedException e) {
-			e.printStackTrace();
-		}*/
-		while(!sql.isConnected()) {
-			/*do {
-				System.out.println("Please choose a database type:");
-				System.out.println("1: SQLite, 2: Remote MySQL Server");
-			} while(!sql.setProvider(s.nextInt()));
-			s.nextLine();*/
-			ArrayList<String> cred = new ArrayList<>();
-			if(sql.getDPType() == "SQLite") {
-				cred.add(null);
-				do {
-					System.out.println("You have chosen SQLite DB.");
-					System.out.println("Please enter the SQLite file you wish to open.");
-					//cred.set(0, s.nextLine());
-					sql.setCred(cred);
-				} while(!sql.connect());
-			}
-		}
-		System.out.println("Goodbye.");
-		//s.close();
+		slcf.cancel.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		    	st.setVisible(true);
+		        slcf.setVisible(false);
+		    }
+		});
+		slcf.confirm.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent ev) {
+		    	slcf.setEnabled(false);
+		    	ArrayList<String> cred = new ArrayList<>();
+		    	cred.set(0, slcf.file.getText());
+		    	sql.setProvider("SQLite");
+		    	sql.setCred(cred);
+		    	sql.connect();
+		    	System.out.println(sql.isConnected());
+		    	if(sql.connect()) {
+		    		mscf.setVisible(false);
+		    		ResultSet r = sql.getProvider().query("SELECT * FROM `chinook`"); //Temporary test code
+					if(r != null) {
+						try {
+							while(r.next()) {
+								System.out.println(r.getInt(1) + " " + r.getString(2) + " " + r.getInt(3) + " " + r.getDouble(4));  
+							}
+						} catch(SQLException e) {
+							
+						}
+					}
+		    	}
+		    	slcf.setEnabled(true);
+		    }
+		});
 	}
 	public static void testF() {
 		System.out.println("DONE");
