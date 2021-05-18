@@ -99,6 +99,6 @@ public class SearchDataFrame extends JFrame {
    
    
    
-   
-
+  
 }
+// ¡÷ºÆ
