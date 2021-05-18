@@ -101,4 +101,4 @@ public class SearchDataFrame extends JFrame {
    
   
 }
-// 주석
+// 주석 wntjr
