@@ -19,64 +19,71 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 public class SearchDataFrame extends JFrame {
-   public JTable table;
-   public JButton add, delete, cancel, create;
-   public DefaultTableModel model;
-   private JScrollPane scrollPane;
-   private JComboBox<String> tables;
-   private JButton update;
-   private JTextField textField;
-   public SearchDataFrame() {
+	public JTable table;
+	public JButton add, delete, cancel, execute;
+	public DefaultTableModel model;
+	private JScrollPane scrollPane;
+	private JComboBox<String> tables;
+	private JButton update;
+	private JTextField textField;
+	public SearchDataAddFrame sdaf;
+	public SearchDataFrame() {
+	   sdaf = new SearchDataAddFrame();
+      
+	   setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	   setBounds(100, 100, 450, 300);
+      
+	   JPanel panel_1 = new JPanel();
+	   getContentPane().add(panel_1, BorderLayout.SOUTH);
+	   panel_1.setLayout(new GridLayout(2, 2));
+      
+	   add = new JButton("Add Constraint");
+	   panel_1.add(add);
+      
+	   delete = new JButton("Delete Constraint");
+	   panel_1.add(delete);
+      
+	   cancel = new JButton("Cancel");
+	   panel_1.add(cancel);
+      
+	   execute = new JButton("Execute Query");
+	   panel_1.add(execute);
       
       
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setBounds(100, 100, 450, 300);
       
-      JPanel panel_1 = new JPanel();
-      getContentPane().add(panel_1, BorderLayout.SOUTH);
-      panel_1.setLayout(new GridLayout(2, 2));
+	   String[] columns = {"Column Name", "Constraint"};
+	   table = new JTable(new DefaultTableModel(columns, 0));
+	   model = (DefaultTableModel) table.getModel();
       
-      add = new JButton("Add Constraint");
-      panel_1.add(add);
+	   scrollPane = new JScrollPane();
+	   getContentPane().add(scrollPane, BorderLayout.WEST);
+	   scrollPane.setViewportView(table);
+	   
+	   JPanel panel_2 = new JPanel();
+	   getContentPane().add(panel_2, BorderLayout.NORTH);
       
-      delete = new JButton("Delete Constraint");
-      panel_1.add(delete);
+	   tables = new JComboBox<String>();
+	   panel_2.add(tables);
       
-      cancel = new JButton("Cancel");
-      panel_1.add(cancel);
-      
-      create = new JButton("Create");
-      panel_1.add(create);
-      
-      
-      
-      String[] columns = {"Column Name", "Constraint"};
-      table = new JTable(new DefaultTableModel(columns, 0));
-      model = (DefaultTableModel) table.getModel();
-      
-      scrollPane = new JScrollPane();
-      getContentPane().add(scrollPane, BorderLayout.WEST);
-      scrollPane.setViewportView(table);
-      
-      JPanel panel_2 = new JPanel();
-      getContentPane().add(panel_2, BorderLayout.NORTH);
-      
-      tables = new JComboBox<String>();
-//      for(String name : t) tables.addItem(name);
-      panel_2.add(tables);
-      
-      update = new JButton("Refresh tables");
-      panel_2.add(update);
-      
-      
-   
-      
-      
-
-   }
-   
-   
-   
-
+	   update = new JButton("Refresh tables");
+	   panel_2.add(update);
+	   sdaf.apply.addActionListener(new ActionListener() {
+		   public void actionPerformed (ActionEvent e) {
+			   Object[] row = {sdaf.column.getText(), sdaf.constraint.getText()};
+			   model.addRow(row);
+			   //setVisible(true);
+		   }
+	   });
+	   sdaf.cancel.addActionListener(new ActionListener() {
+		   public void actionPerformed (ActionEvent e) {
+			   sdaf.setVisible(false);
+		   }
+	   });
+	   add.addActionListener(new ActionListener() {
+		   public void actionPerformed (ActionEvent e) {
+			   System.out.println(this);
+			   sdaf.setVisible(true);
+		   }
+	   });
+	}
 }
-// ÁÖ¼®¾õµð³ª¤ÃŽä

@@ -19,9 +19,6 @@ public class SearchDataAddFrame extends JFrame {
    public JButton apply, cancel;
    private JPanel contentPane;
    public JTextField column, constraint;
-   
-   SearchDataFrame sdf = new SearchDataFrame();
-
    public SearchDataAddFrame() {
 
       
@@ -38,11 +35,11 @@ public class SearchDataAddFrame extends JFrame {
       
       apply = new JButton("Apply");
       panel.add(apply);
-      apply.addActionListener(new applyButtonClickListener());
+      //apply.addActionListener(new applyButtonClickListener());
       
       cancel = new JButton("Cancel");
       panel.add(cancel);
-      cancel.addActionListener(new cancelButtonClickListener());
+      //cancel.addActionListener(new cancelButtonClickListener());
       
       JPanel panel_1 = new JPanel();
       contentPane.add(panel_1, BorderLayout.CENTER);
@@ -64,7 +61,7 @@ public class SearchDataAddFrame extends JFrame {
       
       
    }
-   
+/*   
     class applyButtonClickListener implements ActionListener {
          public void actionPerformed (ActionEvent e) {
             Object[] row = {column.getText(), constraint.getText()};
@@ -81,5 +78,5 @@ public class SearchDataAddFrame extends JFrame {
          
       }
     
-
+*/
 }
