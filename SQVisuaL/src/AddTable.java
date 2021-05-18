@@ -1,94 +1,84 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.GridLayout;
 import javax.swing.JTable;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.Insets;
 import javax.swing.ListSelectionModel;
 import java.awt.Dimension;
+import javax.swing.JScrollPane;
 
 public class AddTable extends JFrame {
-	private JTable table;
+	public JTable table;
+	public JButton Add, Delete, Cancel, Create;
+	private JButton btnNewButton;
+	private JComboBox comboBox;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddTable frame = new AddTable();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
-	public AddTable() {
-		setTitle("SQVisuaL - Create Table");
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0};
-		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		getContentPane().setLayout(gridBagLayout);
+   /**
+    * Launch the application.
+    */
 
-		String data[][]={ {"Name","VARCHAR", "No", "No", "No"},    
-                {"ID","VARCHAR","Yes", "-", "-"}    };    
-		String column[]={"Column Name","Data Type","Primary Key?", "Can be NULL?", "Must be unique?"};
-		table = new JTable(data, column);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setShowGrid(false);
-		GridBagConstraints gbc_table = new GridBagConstraints();
-		gbc_table.anchor = GridBagConstraints.NORTH;
-		gbc_table.fill = GridBagConstraints.HORIZONTAL;
-		gbc_table.gridx = 0;
-		gbc_table.gridy = 0;
-		gbc_table.gridwidth = 2;
-		getContentPane().add(table, gbc_table);
-		
-		JButton btnNewButton = new JButton("Add Column");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 1;
-		getContentPane().add(btnNewButton, gbc_btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Delete Column");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_1.gridx = 1;
-		gbc_btnNewButton_1.gridy = 1;
-		getContentPane().add(btnNewButton_1, gbc_btnNewButton_1);
-		
-		JButton btnNewButton_2 = new JButton("Cancel");
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_2.gridx = 0;
-		gbc_btnNewButton_2.gridy = 2;
-		getContentPane().add(btnNewButton_2, gbc_btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("Create");
-		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
-		gbc_btnNewButton_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_3.gridx = 1;
-		gbc_btnNewButton_3.gridy = 2;
-		getContentPane().add(btnNewButton_3, gbc_btnNewButton_3);
-		
-		
-		this.setSize(450, 300);
 
-	}
+   /**
+    * Create the frame.
+    */
+   public AddTable() {
+	   String column[]={"Column Name","Data Type","Primary Key?", "Can be NULL?", "Must be unique?"};
+	   String data[][]={ {"Name","VARCHAR", "No", "No", "No"},    
+			   {"ID","VARCHAR","Yes", "-", "-"}    };
+
+		table = new JTable(new DefaultTableModel(column, 0));
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		
+   	JScrollPane scrollPane = new JScrollPane();
+   	getContentPane().add(scrollPane, BorderLayout.CENTER);
+	scrollPane.setViewportView(table);
+
+	
+	JPanel panel_1 = new JPanel();
+	getContentPane().add(panel_1, BorderLayout.SOUTH);
+	panel_1.setLayout(new GridLayout(2, 2));
+	
+	Add = new JButton("Add Table");
+	Add.setVisible(true);
+	panel_1.add(Add);
+	
+	Delete = new JButton("Delete Table");
+	Add.setVisible(true);
+	panel_1.add(Delete);
+	
+	Cancel = new JButton("Cancel");
+	Cancel.setVisible(true);
+	panel_1.add(Cancel);
+	
+	Create = new JButton("Create");
+	Create.setVisible(true);
+	panel_1.add(Create);
+	
+	JPanel panel = new JPanel();
+	getContentPane().add(panel, BorderLayout.NORTH);
+	panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+	
+	comboBox = new JComboBox<String>();
+	panel.add(comboBox);
+	
+	btnNewButton = new JButton("Refresh");
+	panel.add(btnNewButton);
+
+	setSize(500, 400);
+
+   }
 
 }

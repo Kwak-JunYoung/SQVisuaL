@@ -14,6 +14,7 @@ public class RunProgram {
 		MySQLConnFrame mscf = new MySQLConnFrame();
 		SQLiteConnFrame slcf = new SQLiteConnFrame();
 		SearchDataFrame sdf = new SearchDataFrame();
+		AddTable at = new AddTable();
 		idf = null;// = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -104,6 +105,11 @@ public class RunProgram {
 		mf.insertData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				idf.setVisible(true);
+			}
+		});
+		mf.newTable.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				at.setVisible(true);
 			}
 		});
 	}
