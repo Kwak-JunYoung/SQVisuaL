@@ -43,7 +43,7 @@ public class AddTable extends JFrame {
 		gridBagLayout.columnWeights = new double[]{1.0, 1.0};
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
-		
+
 		String data[][]={ {"Name","VARCHAR", "No", "No", "No"},    
                 {"ID","VARCHAR","Yes", "-", "-"}    };    
 		String column[]={"Column Name","Data Type","Primary Key?", "Can be NULL?", "Must be unique?"};
@@ -51,6 +51,7 @@ public class AddTable extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setShowGrid(false);
 		GridBagConstraints gbc_table = new GridBagConstraints();
+		gbc_table.anchor = GridBagConstraints.NORTH;
 		gbc_table.fill = GridBagConstraints.HORIZONTAL;
 		gbc_table.gridx = 0;
 		gbc_table.gridy = 0;
@@ -85,7 +86,8 @@ public class AddTable extends JFrame {
 		gbc_btnNewButton_3.gridy = 2;
 		getContentPane().add(btnNewButton_3, gbc_btnNewButton_3);
 		
-		this.setSize(400, 300);
+		
+		this.setSize(450, 300);
 
 	}
 
