@@ -12,7 +12,9 @@ public class MainFrame extends JFrame {
 	private JLabel label;
 	private JLabel label_1;
 	private JLabel lblNewLabel;
+	private JTable table_1;
 	public MainFrame() {
+		setTitle("SQVisuaL - <Hostname ¶Ç´Â File Location>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -42,7 +44,9 @@ public class MainFrame extends JFrame {
 		JPanel panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.CENTER);
 		
-		table = new JTable();
+		String data[][]={ {"Key","Price", "Name", "Department", "Count"} };    
+		String column[]={"Column Name","Data Type","Primary Key?", "Can be NULL?", "Must be unique?"};
+		table = new JTable(data, column);
 		panel_1.add(table);
 		
 		JPanel panel_2 = new JPanel();
