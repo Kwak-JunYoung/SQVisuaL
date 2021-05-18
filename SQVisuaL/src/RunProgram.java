@@ -112,6 +112,12 @@ public class RunProgram {
 				at.setVisible(true);
 			}
 		});
+		at.Cancel.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+
+				at.setVisible(false);
+			}
+		});
 	}
 	public void setTableList(ArrayList<String> tables) {
 		this.idf = new InsertDataFrame(tables);
