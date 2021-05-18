@@ -36,6 +36,7 @@ public class AddTable extends JFrame {
 	 * Create the frame.
 	 */
 	public AddTable() {
+		setTitle("SQVisuaL - Create Table");
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
