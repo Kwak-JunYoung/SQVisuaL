@@ -51,11 +51,11 @@ public class AddTable extends JFrame {
 	getContentPane().add(panel_1, BorderLayout.SOUTH);
 	panel_1.setLayout(new GridLayout(2, 2));
 	
-	Add = new JButton("Add Table");
+	Add = new JButton("Add Column");
 	Add.setVisible(true);
 	panel_1.add(Add);
 	
-	Delete = new JButton("Delete Table");
+	Delete = new JButton("Delete Column");
 	Add.setVisible(true);
 	panel_1.add(Delete);
 	

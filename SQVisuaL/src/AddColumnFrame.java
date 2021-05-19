@@ -20,7 +20,6 @@ public class AddColumnFrame extends JFrame {
 	private JPanel contentPane;
 	public JButton apply, cancel;
 	
-	AddColumnFrame acf = new AddColumnFrame();
 	private JLabel lblNewLabel, lblNewLabel_1, lblNewLabel_2, lblNewLabel_3, lblNewLabel_4;
 	private JTextField ColumnName, DataType;
 	private JPanel panel_2, panel_3, panel_4;
