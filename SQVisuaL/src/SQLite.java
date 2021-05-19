@@ -38,6 +38,11 @@ public class SQLite extends DataProvider{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public int updateQuery(String q) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
 
 /* To import library

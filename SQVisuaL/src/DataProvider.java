@@ -8,4 +8,5 @@ public abstract class DataProvider {
 	public abstract boolean connect();
 	public abstract void close();
 	public abstract ResultSet query(String q);
+	public abstract int updateQuery(String q);
 }

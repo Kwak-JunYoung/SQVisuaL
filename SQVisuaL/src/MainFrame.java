@@ -13,7 +13,9 @@ public class MainFrame extends JFrame {
 	private JLabel label_1;
 	private JLabel lblNewLabel;
 	private JTable table_1;
-	public MainFrame() {
+	private SQVisuaL sql;
+	public MainFrame(SQVisuaL sql) {
+		this.sql = sql;
 		setTitle("SQVisuaL - <Hostname ¶Ç´Â File Location>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -54,6 +56,10 @@ public class MainFrame extends JFrame {
 		
 		lblNewLabel = new JLabel("Query that was executed recently will show up here");
 		panel_2.add(lblNewLabel);
+	}
+	public void updateTable(String currentTable) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

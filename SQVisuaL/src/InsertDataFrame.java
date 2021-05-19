@@ -16,20 +16,23 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
 
 class InsertDataFrame extends JFrame {
-	private String currentTable;
+	public String currentTable;
 	public JTable table;
 	public JButton cancel, execute;
 	private JComboBox<String> tables;
 	private SQVisuaL sql;
 	private JLabel status;
-	public InsertDataFrame(ArrayList<String> t, SQVisuaL sql) {
+	private JCheckBox closeOnExe;
+	public ArrayList<String> t;
+	public InsertDataFrame(SQVisuaL sql, MainFrame mf) {
 		super("SQVisuaL - Insert new data");
 		this.sql = sql;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		
+		setBounds(100, 100, 800, 500);
+		this.updateTables();
 		String[] columns = {"Target attribute", "Value", "Set to NULL", "Data type", "Max length", "Key status"};
 		
 		table = new JTable(new DefaultTableModel(columns, 0)) {
@@ -49,18 +52,26 @@ class InsertDataFrame extends JFrame {
 		panel_1.setLayout(new GridLayout(1, 2));
 		
 		cancel = new JButton("Cancel");
+		cancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		panel_1.add(cancel);
 		
 		execute = new JButton("Execute");
 		execute.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
+				if (table.isEditing()) table.getCellEditor().stopCellEditing();
 				int rc = model.getRowCount();
 				String name = "(", data = "(", q = "INSERT INTO `" + currentTable + "` ";
 	    		for (int i = 0; i < rc; i++) {
 	    			name += "`" + (String) model.getValueAt(i, 0) + "`";
 	    			data += "'" + (String) model.getValueAt(i, 1) + "'";
-	    			if(i != rc) {
+	    			if(i !=  rc - 1) {
 	    				name += ", ";
 	    				data += ", ";
 	    			}
@@ -71,11 +82,18 @@ class InsertDataFrame extends JFrame {
 	    		q += " VALUES ";
 	    		q += data;
 	    		q += ";";
-	    		ResultSet r = sql.getProvider().query(q);
+	    		sql.getProvider().updateQuery(q);
+	    		if(closeOnExe.isSelected()) {
+	    			setVisible(false);
+	    			mf.updateTable(currentTable);
+	    		}
 			}
 		});
 		execute.setVisible(false);
 		panel_1.add(execute);
+		
+		closeOnExe = new JCheckBox("Close window on execution");
+		panel_1.add(closeOnExe);
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.NORTH);
@@ -121,5 +139,22 @@ class InsertDataFrame extends JFrame {
 		status = new JLabel("Please choose a table first.");
 		panel.add(status, BorderLayout.SOUTH);
 	    
+	}
+	public void updateTables() {
+		if(this.sql.connect()) {
+    		ResultSet r = sql.getProvider().query("SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'mysql', 'performance_schema')");
+    		if(r != null) {
+    			ArrayList<String> tables = new ArrayList<>();
+    			tables.add("Please select a table...");
+				try {
+					while(r.next()) {
+						tables.add(r.getString(1));  
+					}
+				} catch(SQLException e) {
+					
+				}
+				if(tables.size() != 0) t = tables;
+			}
+    	}
 	}
 }
