@@ -123,6 +123,7 @@ public class RunProgram {
 		sdf.add.addActionListener(new ActionListener() {
 	          public void actionPerformed(ActionEvent e) {
 	             sdaf.setVisible(true);
+	             sdf.setVisible(false);
 	          }
 	      });
 
