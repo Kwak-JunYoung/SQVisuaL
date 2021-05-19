@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 public class RunProgram {
 	InsertDataFrame idf;
+	SQVisuaL sql;
+	ArrayList<String> tableList;
 	public void run() {
-		SQVisuaL sql = new SQVisuaL();
+		sql = new SQVisuaL();
 		MainFrame mf = new MainFrame();
 		StartFrame st = new StartFrame();
 		st.setVisible(true);
@@ -15,8 +17,6 @@ public class RunProgram {
 		SQLiteConnFrame slcf = new SQLiteConnFrame();
 		SearchDataFrame sdf = new SearchDataFrame();
 		AddTable at = new AddTable();
-		AddColumnFrame acf = new AddColumnFrame();
-		SearchDataAddFrame sdaf = new SearchDataAddFrame();
 		idf = null;// = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -51,19 +51,6 @@ public class RunProgram {
 		    	if(sql.connect()) {
 		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
-		    		ResultSet r = sql.getProvider().query("SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'mysql', 'performance_schema')");
-		    		if(r != null) {
-		    			ArrayList<String> tables = new ArrayList<>();
-						try {
-							while(r.next()) {
-								tables.add(r.getString(1));  
-							}
-						} catch(SQLException e) {
-							
-						}
-						if(tables.size() != 0) setTableList(tables);
-					}
-		    		
 		    	}
 		    	mscf.setEnabled(true);
 		    }
@@ -106,6 +93,8 @@ public class RunProgram {
 		});
 		mf.insertData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				updateTableList();
+	    		setTableList();
 				idf.setVisible(true);
 			}
 		});
@@ -124,39 +113,27 @@ public class RunProgram {
 			public void actionPerformed(ActionEvent e) {
 				at.setVisible(false);
 			}
-		});	
-		
-		acf.apply.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				acf.setVisible(false);
-			}
 		});
-		acf.cancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				acf.setVisible(false);
-			}
-		});
-		
-		sdf.add.addActionListener(new ActionListener() {
-	          public void actionPerformed(ActionEvent e) {
-	             sdaf.setVisible(true);
-	             sdf.setVisible(false);
-	          }
-	      });
-		sdf.cancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               sdf.setVisible(false);
-            }
-        });
-     
-		sdaf.cancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               sdaf.setVisible(false);
-            }
-        });
-
 	}
-	public void setTableList(ArrayList<String> tables) {
-		this.idf = new InsertDataFrame(tables);
+	public void updateTableList() {
+		if(this.sql.connect()) {
+    		ResultSet r = sql.getProvider().query("SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'mysql', 'performance_schema')");
+    		if(r != null) {
+    			ArrayList<String> tables = new ArrayList<>();
+    			tables.add("Please select a table...");
+				try {
+					while(r.next()) {
+						tables.add(r.getString(1));  
+					}
+				} catch(SQLException e) {
+					
+				}
+				if(tables.size() != 0) this.tableList = tables;
+			}
+    		
+    	}
+	}
+	public void setTableList() {
+		this.idf = new InsertDataFrame(this.tableList, this.sql);
 	}
 }
