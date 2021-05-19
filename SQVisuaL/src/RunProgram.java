@@ -126,6 +126,17 @@ public class RunProgram {
 	             sdf.setVisible(false);
 	          }
 	      });
+		sdf.cancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               sdf.setVisible(false);
+            }
+        });
+     
+		sdaf.cancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               sdaf.setVisible(false);
+            }
+        });
 
 	}
 	public void setTableList(ArrayList<String> tables) {
