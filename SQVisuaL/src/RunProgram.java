@@ -10,13 +10,14 @@ public class RunProgram {
 	ArrayList<String> tableList;
 	public void run() {
 		sql = new SQVisuaL();
-		MainFrame mf = new MainFrame();
+		MainFrame mf = new MainFrame(sql);
 		StartFrame st = new StartFrame();
 		st.setVisible(true);
 		MySQLConnFrame mscf = new MySQLConnFrame();
 		SQLiteConnFrame slcf = new SQLiteConnFrame();
 		SearchDataFrame sdf = new SearchDataFrame();
 		AddTable at = new AddTable();
+		AddColumnFrame acf = new AddColumnFrame();
 		idf = null;// = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -93,8 +94,7 @@ public class RunProgram {
 		});
 		mf.insertData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateTableList();
-	    		setTableList();
+				idf = new InsertDataFrame(sql, mf);
 				idf.setVisible(true);
 			}
 		});
@@ -114,26 +114,5 @@ public class RunProgram {
 				at.setVisible(false);
 			}
 		});
-	}
-	public void updateTableList() {
-		if(this.sql.connect()) {
-    		ResultSet r = sql.getProvider().query("SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'mysql', 'performance_schema')");
-    		if(r != null) {
-    			ArrayList<String> tables = new ArrayList<>();
-    			tables.add("Please select a table...");
-				try {
-					while(r.next()) {
-						tables.add(r.getString(1));  
-					}
-				} catch(SQLException e) {
-					
-				}
-				if(tables.size() != 0) this.tableList = tables;
-			}
-    		
-    	}
-	}
-	public void setTableList() {
-		this.idf = new InsertDataFrame(this.tableList, this.sql);
 	}
 }
