@@ -52,8 +52,6 @@ public class RunProgram {
 		    	if(sql.connect()) {
 		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
-		    		updateTableList();
-		    		setTableList();
 		    	}
 		    	mscf.setEnabled(true);
 		    }
@@ -96,6 +94,8 @@ public class RunProgram {
 		});
 		mf.insertData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				updateTableList();
+	    		setTableList();
 				idf.setVisible(true);
 			}
 		});
@@ -109,20 +109,14 @@ public class RunProgram {
 			public void actionPerformed(ActionEvent e) {
 				at.setVisible(false);
 			}
-		});	
-		
-		/*sdf.add.addActionListener(new ActionListener() {
-	          public void actionPerformed(ActionEvent e) {
-	             sdaf.setVisible(true);
-	          }
-	      });*/
-
+		});
 	}
 	public void updateTableList() {
 		if(this.sql.connect()) {
     		ResultSet r = sql.getProvider().query("SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'mysql', 'performance_schema')");
     		if(r != null) {
     			ArrayList<String> tables = new ArrayList<>();
+    			tables.add("Please select a table...");
 				try {
 					while(r.next()) {
 						tables.add(r.getString(1));  
@@ -136,6 +130,6 @@ public class RunProgram {
     	}
 	}
 	public void setTableList() {
-		this.idf = new InsertDataFrame(this.tableList);
+		this.idf = new InsertDataFrame(this.tableList, this.sql);
 	}
 }
