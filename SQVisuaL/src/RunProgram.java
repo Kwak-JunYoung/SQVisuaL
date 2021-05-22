@@ -52,6 +52,9 @@ public class RunProgram {
 		    	if(sql.connect()) {
 		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
+		    		mf.setTitle("SQVisuaL - " + mscf.host.getText());
+		    		mf.updateTable("shoppinglist");
+		    		mf.setTable();
 		    	}
 		    	mscf.setEnabled(true);
 		    }

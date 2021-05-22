@@ -86,6 +86,7 @@ class InsertDataFrame extends JFrame {
 	    		if(closeOnExe.isSelected()) {
 	    			setVisible(false);
 	    			mf.updateTable(currentTable);
+	    			mf.setTable();
 	    		}
 			}
 		});
