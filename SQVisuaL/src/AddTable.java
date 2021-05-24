@@ -30,7 +30,6 @@ public class AddTable extends JFrame {
     * Launch the application.
     */
 
-
    /**
     * Create the frame.
     */
@@ -80,5 +79,5 @@ public class AddTable extends JFrame {
 	setSize(500, 400);
 
    }
-
+// zoosuck
 }
