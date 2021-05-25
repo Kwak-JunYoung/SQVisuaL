@@ -111,10 +111,3 @@ public final class MySQL extends DataProvider {
 		return tables;
 	}
 }
-/*
- * 	private String name;
-	private boolean canBeNull;
-	private String dataType;
-	private int maxLen;
-	private String key;
-*/
