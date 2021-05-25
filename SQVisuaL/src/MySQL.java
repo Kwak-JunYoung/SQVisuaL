@@ -1,4 +1,5 @@
-import java.sql.*;  
+import java.sql.*;
+import java.util.ArrayList;  
 public final class MySQL extends DataProvider {
 	//Connection c;
 	String host;
@@ -73,4 +74,47 @@ public final class MySQL extends DataProvider {
 		this.password = password;
 	}
 
+	@Override
+	public ArrayList<MetaRow> getTableInfo(String table) {
+		Statement s;
+		ArrayList<MetaRow> rows = new ArrayList<>();
+		try {
+			s = this.c.createStatement();
+			ResultSet r = s.executeQuery("SELECT COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLUMN_KEY FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + table + "';");
+			if(r != null) {
+				try {
+					while(r.next()) {
+						rows.add(new MetaRow(r.getString(1), (r.getString(2).equals("NO") ? false : true), r.getString(3), r.getInt(4), r.getString(5)));
+					}
+				} catch(SQLException e1) {
+					e1.printStackTrace();
+					return null;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rows;
+	}
+
+	@Override
+	public ArrayList<String> getTables() {
+		ArrayList<String> tables = new ArrayList<>();
+		ResultSet r;
+		try {
+			Statement s = this.c.createStatement();
+			r = s.executeQuery("SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'mysql', 'performance_schema')");
+			if(r != null) while(r.next()) tables.add(r.getString(1));  
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return tables;
+	}
 }
+/*
+ * 	private String name;
+	private boolean canBeNull;
+	private String dataType;
+	private int maxLen;
+	private String key;
+*/
