@@ -52,8 +52,10 @@ public class RunProgram {
 		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
 		    		mf.setTitle("SQVisuaL - " + mscf.host.getText());
-		    		mf.updateTable("shoppinglist");
-		    		mf.setTable();
+		    		if(sql.getProvider().getTables().size() != 0) {
+		    			mf.updateTable(sql.getProvider().getTables().get(0));
+		    			mf.setTable();
+		    		}
 		    	}
 		    	mscf.setEnabled(true);
 		    }
@@ -76,8 +78,10 @@ public class RunProgram {
 		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
 		    		mf.setTitle("SQVisuaL - " + slcf.file.getText());
-		    		mf.updateTable("shoppinglist");
-		    		mf.setTable();
+		    		if(sql.getProvider().getTables().size() != 0) {
+		    			mf.updateTable(sql.getProvider().getTables().get(0));
+		    			mf.setTable();
+		    		}
 		    	}
 		    	slcf.setEnabled(true);
 		    }
