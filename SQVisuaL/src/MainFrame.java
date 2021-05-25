@@ -28,6 +28,7 @@ public class MainFrame extends JFrame {
 	private DefaultTableModel model;
 	private boolean allowEdit, internalEdit;
 	public MainFrame(SQVisuaL sql) {
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		this.pks = new ArrayList<>();
 		this.show = new ArrayList<>();	
 		this.internalTable = new ArrayList<String[]>();
