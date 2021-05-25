@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 public abstract class DataProvider {
 	boolean isOpen;
 	Connection c;
@@ -9,4 +10,6 @@ public abstract class DataProvider {
 	public abstract void close();
 	public abstract ResultSet query(String q);
 	public abstract int updateQuery(String q);
+	public abstract ArrayList<MetaRow> getTableInfo(String table);
+	public abstract ArrayList<String> getTables();
 }
