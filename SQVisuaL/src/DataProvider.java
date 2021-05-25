@@ -12,4 +12,5 @@ public abstract class DataProvider {
 	public abstract int updateQuery(String q);
 	public abstract ArrayList<MetaRow> getTableInfo(String table);
 	public abstract ArrayList<String> getTables();
+	public abstract SQLException updateQueryReturnErr(String q);
 }

@@ -27,6 +27,7 @@ public class MainFrame extends JFrame {
 	private JScrollPane scrollPane;
 	private DefaultTableModel model;
 	private boolean allowEdit, internalEdit;
+	private JLabel errormsg;
 	public MainFrame(SQVisuaL sql) {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		this.pks = new ArrayList<>();
@@ -83,9 +84,13 @@ public class MainFrame extends JFrame {
 			}
 			
 		});
+		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		panel_1.add(scrollPane);
+		
+		errormsg = new JLabel("Any errors on editing this table will be displayed here.");
+		panel_1.add(errormsg, BorderLayout.SOUTH);
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.NORTH);
@@ -103,7 +108,9 @@ public class MainFrame extends JFrame {
 			q += "`" + this.currentTable + "`.`" + this.internalTable.get(0)[col] + "` = '" + this.internalTable.get(r + 1)[col] + "'";
 			if (i != this.pks.size() - 1) q += " AND ";
 		}
-		sql.getProvider().updateQuery(q);
+		SQLException e = sql.getProvider().updateQueryReturnErr(q);
+		if(e != null) this.errormsg.setText(e.getMessage());
+		else this.errormsg.setText("Record updated successfully");
 		this.updateQuery(q);
 		this.updateTable(this.currentTable);
 		if(this.show.size() == 0) this.setTable();
