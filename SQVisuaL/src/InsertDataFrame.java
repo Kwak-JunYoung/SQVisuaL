@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -117,19 +118,12 @@ class InsertDataFrame extends JFrame {
 		    		for (int i = rc - 1; i >= 0; i--) {
 		    		    model.removeRow(i);
 		    		}
-			    	ResultSet r = sql.getProvider().query("SELECT COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, COLUMN_KEY FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + currentTable + "';");
-			    	if(r != null) {
-						try {
-							while(r.next()) {
-								String setToNull = (r.getString(2).equals("NO") ? "Unavailable" : "");
-								Object[] row = {r.getString(1), "", setToNull, r.getString(3), r.getString(4), r.getString(5)};
-								model.addRow(row);
-							}
-						} catch(SQLException e1) {
-							status.setText("Unexpected error has occurred. Please refer to the log.");
-							e1.printStackTrace();
-						}
-					}
+			    	ArrayList<MetaRow> arr = sql.getProvider().getTableInfo(currentTable);
+			    	for(MetaRow r : arr) {
+			    		String setToNull = (r.getNull() ? "Unavailable" : "");
+						Object[] row = {r.getName(), "", setToNull, r.getType(), (r.getLen() != -1 ? r.getLen() : ""), r.getKeyStatus()};
+						model.addRow(row);
+			    	}
 			    	status.setText("Table schema fetched. Please enter the values by double clicking the cells.");
 			    }
 			}
@@ -143,19 +137,9 @@ class InsertDataFrame extends JFrame {
 	}
 	public void updateTables() {
 		if(this.sql.connect()) {
-    		ResultSet r = sql.getProvider().query("SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'mysql', 'performance_schema')");
-    		if(r != null) {
-    			ArrayList<String> tables = new ArrayList<>();
-    			tables.add("Please select a table...");
-				try {
-					while(r.next()) {
-						tables.add(r.getString(1));  
-					}
-				} catch(SQLException e) {
-					
-				}
-				if(tables.size() != 0) t = tables;
-			}
+			ArrayList<String> tables = sql.getProvider().getTables();
+			tables.add(0, "Please select a table...");
+			if(tables.size() != 0) t = tables;
     	}
 	}
 }

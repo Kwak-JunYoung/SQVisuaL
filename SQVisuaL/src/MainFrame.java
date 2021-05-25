@@ -113,7 +113,7 @@ public class MainFrame extends JFrame {
 		this.internalEdit = true;
 		this.model.setColumnCount(0);
 		this.model.setRowCount(0);
-		int r = this.internalTable.size() - 1, c = this.internalTable.get(0).length;
+		int r = this.internalTable.size(), c = this.internalTable.get(0).length;
 		for(int i = 0; i < c; i++) this.model.addColumn(this.internalTable.get(0)[i]);
 		for(int i = 1; i < r; i++) {
 			String[] row = new String[c];
@@ -128,9 +128,9 @@ public class MainFrame extends JFrame {
 		this.show = columnsToShow;
 		this.model.setColumnCount(0);
 		this.model.setRowCount(0);
-		int r = this.internalTable.size() - 1;
+		int r = this.internalTable.size();
 		for(Integer i : columnsToShow) this.model.addColumn(this.internalTable.get(0)[i]);
-		for(int i = 0; i < r; i++) {
+		for(int i = 1; i < r; i++) {
 			String[] row = new String[columnsToShow.size()];
 			int k = 0;
 			for(Integer j : columnsToShow) row[k++] = this.internalTable.get(i)[j];
@@ -144,25 +144,18 @@ public class MainFrame extends JFrame {
 	public void updateTable(String currentTable) {
 		this.currentTable = currentTable;
 		table.clearSelection();
-		//if (table.isEditing()) table.getCellEditor().stopCellEditing();
 		String q = "SELECT * FROM " + currentTable + ";";
 		ResultSet r = sql.getProvider().query(q);
-		ResultSet sch = sql.getProvider().query("SELECT COLUMN_NAME, COLUMN_KEY FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '" + currentTable + "';");
 		ArrayList<String[]> table = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
+		ArrayList<MetaRow> rows = sql.getProvider().getTableInfo(currentTable);
 		this.pks.clear();
 		this.internalTable.clear();
 		int c = 0;
-		if(sch != null) {
-			try {
-				while(sch.next()) {
-					if(sch.getString(2).equals("PRI")) this.pks.add(c);
-					temp.add(sch.getString(1));
-					c++;
-				}
-			} catch(SQLException e1) {
-				e1.printStackTrace();
-			}
+		for(MetaRow row : rows) {
+			if(row.getKeyStatus().equals("PRI")) this.pks.add(c);
+			temp.add(row.getName());
+			c++;
 		}
 		String[] arr = new String[temp.size()];
 		arr = temp.toArray(arr);

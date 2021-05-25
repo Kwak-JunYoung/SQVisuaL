@@ -34,6 +34,7 @@ public class SQLiteConnFrame extends JFrame {
 		
 		file = new JTextField();
 		panel_1.add(file);
+		file.setText("testdb.db");
 		file.setColumns(10);
 	}
 }
