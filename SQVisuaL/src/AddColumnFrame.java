@@ -26,11 +26,12 @@ public class AddColumnFrame extends JFrame {
 	private JRadioButton PK_Yes, PK_No;
 	private JRadioButton Null_Yes, Null_No, Null_Unknown;
 	private JRadioButton Unique_Yes, Unique_No, Unique_Unknown;
+	private AddTable at;
 
 	/**
 	 * Create the frame.
 	 */
-	public AddColumnFrame() {
+	public AddColumnFrame(AddTable at) {
 		setSize(400, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();

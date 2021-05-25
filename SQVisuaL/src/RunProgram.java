@@ -16,8 +16,7 @@ public class RunProgram {
 		MySQLConnFrame mscf = new MySQLConnFrame();
 		SQLiteConnFrame slcf = new SQLiteConnFrame();
 		SearchDataFrame sdf = new SearchDataFrame();
-		AddTable at = new AddTable();
-		AddColumnFrame acf = new AddColumnFrame();
+		AddTable at = new AddTable(sql);
 		idf = null;// = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -69,23 +68,16 @@ public class RunProgram {
 		    public void actionPerformed(ActionEvent ev) {
 		    	slcf.setEnabled(false);
 		    	ArrayList<String> cred = new ArrayList<>();
-		    	cred.set(0, slcf.file.getText());
+		    	cred.add(slcf.file.getText());
 		    	sql.setProvider("SQLite");
 		    	sql.setCred(cred);
 		    	sql.connect();
 		    	if(sql.connect()) {
 		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
-		    		ResultSet r = sql.getProvider().query("SELECT * FROM `chinook`"); //Temporary test code
-					if(r != null) {
-						try {
-							while(r.next()) {
-								System.out.println(r.getInt(1) + " " + r.getString(2) + " " + r.getInt(3) + " " + r.getDouble(4));  
-							}
-						} catch(SQLException e) {
-							
-						}
-					}
+		    		mf.setTitle("SQVisuaL - " + slcf.file.getText());
+		    		mf.updateTable("shoppinglist");
+		    		mf.setTable();
 		    	}
 		    	slcf.setEnabled(true);
 		    }
@@ -107,15 +99,6 @@ public class RunProgram {
 			}
 		});
 		
-		at.Add.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				acf.setVisible(true);
-			}
-		});
-		at.Cancel.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				at.setVisible(false);
-			}
-		});
+		
 	}
 }

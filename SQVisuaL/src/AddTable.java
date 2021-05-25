@@ -15,6 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ListSelectionModel;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
@@ -24,6 +27,8 @@ public class AddTable extends JFrame {
 	public JButton Add, Delete, Cancel, Create;
 	private JButton btnNewButton;
 	private JComboBox comboBox;
+	private AddColumnFrame acf;
+	private SQVisuaL sql;
 
 
    /**
@@ -33,7 +38,8 @@ public class AddTable extends JFrame {
    /**
     * Create the frame.
     */
-   public AddTable() {
+   public AddTable(SQVisuaL sql) {
+	acf = new AddColumnFrame(this);
 	   String column[]={"Column Name","Data Type","Primary Key?", "Can be NULL?", "Must be unique?"};
 	   String data[][]={ {"Name","VARCHAR", "No", "No", "No"},    
 			   {"ID","VARCHAR","Yes", "-", "-"}    };
@@ -77,7 +83,16 @@ public class AddTable extends JFrame {
 	panel.add(btnNewButton);
 
 	setSize(500, 400);
-
+	Add.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			acf.setVisible(true);
+		}
+	});
+	Cancel.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+			setVisible(false);
+		}
+	});
    }
 // zoosuck
 }
