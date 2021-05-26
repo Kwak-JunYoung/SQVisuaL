@@ -28,6 +28,7 @@ public class AddTable extends JFrame {
 	private JButton btnNewButton;
 	private JComboBox comboBox;
 	private AddColumnFrame acf;
+	private DeleteColumnFrame dcf;
 	private SQVisuaL sql;
 
 
@@ -50,7 +51,7 @@ public class AddTable extends JFrame {
    	JScrollPane scrollPane = new JScrollPane();
    	getContentPane().add(scrollPane, BorderLayout.CENTER);
 	scrollPane.setViewportView(table);
-
+	model.addRow(data);
 	
 	JPanel panel_1 = new JPanel();
 	getContentPane().add(panel_1, BorderLayout.SOUTH);
@@ -61,7 +62,7 @@ public class AddTable extends JFrame {
 	panel_1.add(Add);
 	
 	Delete = new JButton("Delete Column");
-	Add.setVisible(true);
+	Delete.setVisible(true);
 	panel_1.add(Delete);
 	
 	Cancel = new JButton("Cancel");
@@ -86,6 +87,7 @@ public class AddTable extends JFrame {
 	Add.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			acf.setVisible(true);
+			((DefaultTableModel) table.getModel()).addRow(AddColumnFrame.getTuple());
 		}
 	});
 	Cancel.addActionListener(new ActionListener(){
@@ -93,6 +95,12 @@ public class AddTable extends JFrame {
 			setVisible(false);
 		}
 	});
+	Delete.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+			dcf.setVisible(true);
+		}
+	});
+	
    }
 // zoosuck
 }
