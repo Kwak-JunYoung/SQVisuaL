@@ -16,7 +16,7 @@ public class RunProgram {
 		MySQLConnFrame mscf = new MySQLConnFrame();
 		SQLiteConnFrame slcf = new SQLiteConnFrame();
 		SearchDataFrame sdf = new SearchDataFrame();
-		AddTable at = new AddTable(sql);
+		AddTable at = new AddTable(mf, sql);
 		idf = null;// = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -76,7 +76,7 @@ public class RunProgram {
 		    	sql.connect();
 		    	if(sql.connect()) {
 		    		mf.setVisible(true);
-		    		mscf.setVisible(false);
+		    		slcf.setVisible(false);
 		    		mf.setTitle("SQVisuaL - " + slcf.file.getText());
 		    		if(sql.getProvider().getTables().size() != 0) {
 		    			mf.updateTable(sql.getProvider().getTables().get(0));

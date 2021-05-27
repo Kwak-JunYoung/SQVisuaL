@@ -33,7 +33,7 @@ public class AddColumnFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AddColumnFrame(AddTable at) {
-		setSize(400, 300);
+		setSize(488, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -51,7 +51,6 @@ public class AddColumnFrame extends JFrame {
 	      
 	    cancel = new JButton("Cancel");
 	    panel.add(cancel);
-//	    cancel.addActionListener(new cancelButtonClickListener());
 	    
 	    JPanel panel_1 = new JPanel();
 	    contentPane.add(panel_1, BorderLayout.CENTER);
@@ -120,6 +119,14 @@ public class AddColumnFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PK_No.setSelected(false);
+				Null_Yes.setVisible(false);
+				Null_No.setVisible(false);
+				Null_Unknown.setVisible(false);
+				Unique_Yes.setVisible(false);
+				Unique_No.setVisible(false);
+				Unique_Unknown.setVisible(false);
+				lblNewLabel_3.setVisible(false);
+				lblNewLabel_4.setVisible(false);
 			}
 	    });
 	    
@@ -127,6 +134,14 @@ public class AddColumnFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				PK_Yes.setSelected(false);
+				Null_Yes.setVisible(true);
+				Null_No.setVisible(true);
+				Null_Unknown.setVisible(true);
+				Unique_Yes.setVisible(true);
+				Unique_No.setVisible(true);
+				Unique_Unknown.setVisible(true);
+				lblNewLabel_3.setVisible(true);
+				lblNewLabel_4.setVisible(true);
 			}
 	    });
 	    
@@ -184,26 +199,23 @@ public class AddColumnFrame extends JFrame {
 			    tuple[0] = ColumnName.getText();
 			    tuple[1] = DataType.getText();
 			    
-			    if(PK_Yes.isSelected())
+			    if(PK_Yes.isSelected()) {
 			    	tuple[2] = "Yes";
-			    else if (PK_No.isSelected())
-			    	tuple[2] = "No";
-			    else
-			    	tuple[2] = "Not Selected";
-			    
-			    if(Null_Yes.isSelected())
-			    	tuple[3] = "Yes";
-			    else if(Null_No.isSelected())
 			    	tuple[3] = "No";
-			    else
-			    	tuple[3] = "UnKnown";
-			    
-			    if(Unique_Yes.isSelected())
 			    	tuple[4] = "Yes";
-			    else if(Unique_No.isSelected())
-			    	tuple[4] = "No";
-			    else
-			    	tuple[4] = "Unknown";
+			    } else {
+			    	if (PK_No.isSelected()) tuple[2] = "No";
+			    	else tuple[2] = "Not Selected";
+			    
+			    	if(Null_Yes.isSelected()) tuple[3] = "Yes";
+			    	else if(Null_No.isSelected()) tuple[3] = "No";
+			    	else tuple[3] = "UnKnown";
+			    
+			    	if(Unique_Yes.isSelected()) tuple[4] = "Yes";
+			    	else if(Unique_No.isSelected()) tuple[4] = "No";
+			    	else tuple[4] = "Unknown";
+			    }
+			    at.addRow(getTuple());
 				setVisible(false);
 			}
 		});
@@ -212,27 +224,13 @@ public class AddColumnFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				
 			}
 		});
 		
 	}
 
-	static Object[] getTuple() {
+	public Object[] getTuple() {
 		return tuple;
 	}
-//    class applyButtonClickListener implements ActionListener {
-//        public void actionPerformed (ActionEvent e) {
-//           Object[] row = {column.getText(), constraint.getText()};
-//           acf.model.addRow(row);
-//           acf.setVisible(true);
-//        }
-//        
-//     }
-//   
-//   class cancelButtonClickListener implements ActionListener {
-//        public void actionPerformed (ActionEvent e) {
-//           setVisible(false);
-//        }
-//        
-//     }
 }
