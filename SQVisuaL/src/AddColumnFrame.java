@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,10 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.mysql.cj.xdevapi.Table;
-
-//import SearchDataAddFrame.applyButtonClickListener;
-//import SearchDataAddFrame.cancelButtonClickListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
@@ -28,7 +23,6 @@ public class AddColumnFrame extends JFrame {
 	private JRadioButton PK_Yes, PK_No;
 	private JRadioButton Null_Yes, Null_No, Null_Unknown;
 	private JRadioButton Unique_Yes, Unique_No, Unique_Unknown;
-	private AddTable at;
 
 	public AddColumnFrame(AddTable at) {
 		setSize(488, 300);

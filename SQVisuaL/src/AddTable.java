@@ -1,27 +1,19 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridLayout;
 import javax.swing.JTable;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.ListSelectionModel;
-import java.awt.Dimension;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -31,20 +23,11 @@ public class AddTable extends JFrame {
 	public JButton Add, Delete, Cancel, Create;
 	private AddColumnFrame acf;
 	private DeleteColumnFrame dcf;
-	private SQVisuaL sql;
 	private JPanel panel_2;
 	private JLabel status;
 	private JLabel tableNameLabel;
 	private JTextField tableName;
-	private MainFrame mf;
 
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the frame.
-	 */
 	public AddTable(MainFrame mf, SQVisuaL sql) {
 		acf = new AddColumnFrame(this);
 		dcf = new DeleteColumnFrame();
@@ -53,7 +36,6 @@ public class AddTable extends JFrame {
 		// {"ID","VARCHAR","Yes", "-", "-"} };
 
 		table = new JTable(new DefaultTableModel(column, 0));
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
 		JScrollPane scrollPane = new JScrollPane();
 		// getContentPane().add(scrollPane, BorderLayout.CENTER);

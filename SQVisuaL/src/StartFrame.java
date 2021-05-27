@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//import java.sql.*;
 class StartFrame extends JFrame {
 	JButton MySQL_B, SQLite_B;
 
@@ -10,7 +9,6 @@ class StartFrame extends JFrame {
 		super("SQVisuaL");
 		this.setSize(300, 200);
 		this.setLayout(null);
-		JDialog d = new JDialog(this);
 		JLabel l;
 		l = new JLabel("Please select your database type");
 		l.setBounds(40, 20, 200, 30);

@@ -3,7 +3,6 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,8 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.table.TableModel;
-import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 public class SearchDataFrame extends JFrame {
@@ -30,9 +27,7 @@ public class SearchDataFrame extends JFrame {
 	public DefaultTableModel model;
 	private JScrollPane scrollPane;
 	private JComboBox<String> tables;
-	private JTextField textField;
 	private SQVisuaL sql;
-	private ArrayList<Pair<String, Boolean>> attrs;
 	private SearchDataAddFrame sdaf;
 	private String currentTable;
 	private JLabel status;

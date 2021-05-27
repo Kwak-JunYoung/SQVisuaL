@@ -18,7 +18,7 @@ import javax.swing.ScrollPaneConstants;
 public class MainFrame extends JFrame {
 	public JTable table;
 	public JButton newTable, searchData, insertData;
-	private String recentQuery, currentTable;
+	private String currentTable;
 	private ArrayList<Integer> pks, show;
 	private ArrayList<String[]> internalTable;
 	private JLabel status;
@@ -172,7 +172,7 @@ public class MainFrame extends JFrame {
 		String q = "SELECT * FROM " + currentTable;
 		if (cond != null)
 			q += " WHERE " + cond + ";";
-		//System.out.println(q);
+
 		ResultSet r = sql.getProvider().query(q);
 		ArrayList<String[]> table = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
