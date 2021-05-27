@@ -102,7 +102,5 @@ public class RunProgram {
 				at.setVisible(true);
 			}
 		});
-		
-		
 	}
 }

@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 public class SearchDataAddFrame extends JFrame {
 
    public JButton apply, cancel;
+   private String a, b;
    private JPanel contentPane;
    public JTextField column, constraint;
    public SearchDataAddFrame() {
@@ -39,44 +40,5 @@ public class SearchDataAddFrame extends JFrame {
       
       cancel = new JButton("Cancel");
       panel.add(cancel);
-      //cancel.addActionListener(new cancelButtonClickListener());
-      
-      JPanel panel_1 = new JPanel();
-      contentPane.add(panel_1, BorderLayout.CENTER);
-      panel_1.setLayout(new GridLayout(2,2));
-      
-      JLabel lblNewLabel = new JLabel("Column");
-      panel_1.add(lblNewLabel);
-      
-      column = new JTextField();
-      panel_1.add(column);
-      column.setColumns(10);
-      
-      JLabel lblNewLabel_1 = new JLabel("Constraint");
-      panel_1.add(lblNewLabel_1);
-      
-      constraint = new JTextField();
-      panel_1.add(constraint);
-      constraint.setColumns(10);
-      
-      
    }
-/*   
-    class applyButtonClickListener implements ActionListener {
-         public void actionPerformed (ActionEvent e) {
-            Object[] row = {column.getText(), constraint.getText()};
-            sdf.model.addRow(row);
-            sdf.setVisible(true);
-         }
-         
-      }
-    
-    class cancelButtonClickListener implements ActionListener {
-         public void actionPerformed (ActionEvent e) {
-            setVisible(false);
-         }
-         
-      }
-    
-*/
 }
