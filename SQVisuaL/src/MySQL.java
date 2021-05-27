@@ -94,7 +94,10 @@ public final class MySQL extends DataProvider {
 			if(r != null) {
 				try {
 					while(r.next()) {
-						rows.add(new MetaRow(r.getString(1), (r.getString(2).equals("NO") ? false : true), r.getString(3), r.getInt(4), r.getString(5)));
+						boolean canBeNull;
+						if(r.getString(2).equals("NO") || r.getString(5).equals("PRI")) canBeNull = false;
+						else canBeNull = true;
+						rows.add(new MetaRow(r.getString(1), canBeNull, r.getString(3), r.getInt(4), r.getString(5)));
 					}
 				} catch(SQLException e1) {
 					e1.printStackTrace();

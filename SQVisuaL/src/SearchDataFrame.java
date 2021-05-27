@@ -21,21 +21,22 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 public class SearchDataFrame extends JFrame {
-
+	public ArrayList<String> t;
    public JTable table;
    public JButton add, delete, cancel, create;
    public DefaultTableModel model;
-   private int row = 0;
    private JScrollPane scrollPane;
    private JComboBox<String> tables;
-   private JButton update;
    private JTextField textField;
+   private SQVisuaL sql;
 
    
-   public SearchDataFrame() {
+   public SearchDataFrame(SQVisuaL sql) {
 	   
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBounds(100, 100, 450, 300);
+      this.sql = sql;
+      this.updateTables();
       
       JPanel panel_1 = new JPanel();
       getContentPane().add(panel_1, BorderLayout.SOUTH);
@@ -43,6 +44,7 @@ public class SearchDataFrame extends JFrame {
       
       add = new JButton("Add Constraint");
       panel_1.add(add);
+      add.addActionListener(new addButtonClickListener(this));
       
       delete = new JButton("Delete Constraint");
       panel_1.add(delete);
@@ -70,12 +72,8 @@ public class SearchDataFrame extends JFrame {
       getContentPane().add(panel_2, BorderLayout.NORTH);
       
       tables = new JComboBox<String>();
-//      for(String name : t) tables.addItem(name);
       panel_2.add(tables);
-      
-      update = new JButton("Refresh tables");
-      panel_2.add(update);
-      
+      for(String name : this.t) tables.addItem(name);
       
 
    }
@@ -98,20 +96,32 @@ public class SearchDataFrame extends JFrame {
    
    class deleteButtonClickListener implements ActionListener {
        public void actionPerformed (ActionEvent e) {
-    	   row = table.getSelectedRow();
+    	   int row = table.getSelectedRow();
     	   DefaultTableModel tm = (DefaultTableModel)table.getModel();
-    	   if(row>=0 && row < table.getRowCount()) {
-    		   tm.removeRow(row);
-    	   }
+    	   tm.removeRow(row);
        }
        
     }
-   
-		   
+   class addButtonClickListener implements ActionListener {
+	   private SearchDataFrame sdf;
+       public addButtonClickListener(SearchDataFrame searchDataFrame) {
+    	   	super();
+			this.sdf = searchDataFrame;
+       }
 
-   
-   
-   
+       public void actionPerformed (ActionEvent e) {
+    	   SearchDataAddFrame sdaf = new SearchDataAddFrame(this.sdf);
+    	   sdaf.setVisible(true);
+       }
+       
+    }
+   public void updateTables() {
+		if(this.sql.connect()) {
+			ArrayList<String> tables = sql.getProvider().getTables();
+			tables.add(0, "Please select a table...");
+			if(tables.size() != 0) this.t = tables;
+		}
+	}
 
 }
 

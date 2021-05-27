@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class MainFrame extends JFrame {
 	public JTable table;
@@ -20,8 +21,6 @@ public class MainFrame extends JFrame {
 	private String recentQuery, currentTable;
 	private ArrayList<Integer> pks, show;
 	private ArrayList<String[]> internalTable;
-	private JLabel label;
-	private JLabel label_1;
 	private JLabel status;
 	private SQVisuaL sql;
 	private JScrollPane scrollPane;
@@ -50,17 +49,8 @@ public class MainFrame extends JFrame {
 		searchData = new JButton("Search for data");
 		panel.add(searchData);
 		
-		JButton btnNewButton_3 = new JButton("New button");
-		panel.add(btnNewButton_3);
-		
 		insertData = new JButton("Insert new record");
 		panel.add(insertData);
-		
-		label = new JLabel("");
-		panel.add(label);
-		
-		label_1 = new JLabel("");
-		panel.add(label_1);
 		
 		this.model = new DefaultTableModel();
 		
@@ -86,7 +76,7 @@ public class MainFrame extends JFrame {
 		});
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		panel_1.add(scrollPane);
 		
 		errormsg = new JLabel("Any errors on editing this table will be displayed here.");
@@ -99,7 +89,8 @@ public class MainFrame extends JFrame {
 		panel_2.add(status);
 	}
 	public void changeValue(int r, int c, String val) {
-		if(this.internalTable.get(r + 1)[c].equals(val)) return;
+		if((this.internalTable.get(r + 1)[c] == null && val == null) ||
+				(this.internalTable.get(r + 1)[c] != null && this.internalTable.get(r + 1)[c].equals(val))) return;
 		this.allowEdit = false;
 		this.updateQuery(this.internalTable.get(r + 1)[c] + " -> " + val);
 		String q = "UPDATE `" + this.currentTable + "` SET `" + this.internalTable.get(0)[c] + "` = '" + val + "' WHERE ";
@@ -183,5 +174,4 @@ public class MainFrame extends JFrame {
 		}
 		this.internalTable = table;
 	}
-
 }

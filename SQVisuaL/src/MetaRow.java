@@ -15,7 +15,7 @@ public class MetaRow {
 	public String getName() {
 		return this.name;
 	}
-	public boolean getNull() {
+	public boolean canBeNull() {
 		return this.canBeNull;
 	}
 	public String getType() {

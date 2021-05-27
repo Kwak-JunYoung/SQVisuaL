@@ -1,4 +1,3 @@
-
 class IntConstraint extends Constraint {
 
 	public IntConstraint(String table, String attr, String type, int compareTo) {

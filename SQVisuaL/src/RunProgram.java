@@ -8,6 +8,7 @@ public class RunProgram {
 	InsertDataFrame idf;
 	SQVisuaL sql;
 	ArrayList<String> tableList;
+	SearchDataFrame sdf;
 	public void run() {
 		sql = new SQVisuaL();
 		MainFrame mf = new MainFrame(sql);
@@ -15,7 +16,7 @@ public class RunProgram {
 		st.setVisible(true);
 		MySQLConnFrame mscf = new MySQLConnFrame();
 		SQLiteConnFrame slcf = new SQLiteConnFrame();
-		SearchDataFrame sdf = new SearchDataFrame();
+		sdf = null;
 		AddTable at = new AddTable(mf, sql);
 		idf = null;// = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
@@ -88,6 +89,7 @@ public class RunProgram {
 		});
 		mf.searchData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				sdf = new SearchDataFrame(sql);
 				sdf.setVisible(true);
 			}
 		});

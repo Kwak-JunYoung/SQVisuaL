@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,8 +38,19 @@ class InsertDataFrame extends JFrame {
 		String[] columns = {"Target attribute", "Value", "Set to NULL", "Data type", "Max length", "Key status"};
 		
 		table = new JTable(new DefaultTableModel(columns, 0)) {
-			public boolean isCellEditable(int row, int column) {                
-                return column == 1;               
+			public boolean isCellEditable(int row, int column) {
+				switch(column) {
+				case 1:
+					if(this.getModel().getValueAt(row, 2) == null) return true;
+					else if(this.getModel().getValueAt(row, 2).equals("Set to NULL")) return false;
+					return true;
+				case 2:
+					if(this.getModel().getValueAt(row, 2) == null) return true;
+					else if(this.getModel().getValueAt(row, 2).equals("Unavailable")) return false;
+					return true;
+				default:
+					return false;
+				}           
 			}
 		};
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -71,7 +83,8 @@ class InsertDataFrame extends JFrame {
 				String name = "(", data = "(", q = "INSERT INTO `" + currentTable + "` ";
 	    		for (int i = 0; i < rc; i++) {
 	    			name += "`" + (String) model.getValueAt(i, 0) + "`";
-	    			data += "'" + (String) model.getValueAt(i, 1) + "'";
+	    			if(model.getValueAt(i, 2).equals("Set to NULL")) data += "NULL";
+	    			else data += "'" + (String) model.getValueAt(i, 1) + "'";
 	    			if(i !=  rc - 1) {
 	    				name += ", ";
 	    				data += ", ";
@@ -120,14 +133,25 @@ class InsertDataFrame extends JFrame {
 		    		}
 			    	ArrayList<MetaRow> arr = sql.getProvider().getTableInfo(currentTable);
 			    	for(MetaRow r : arr) {
-			    		String setToNull = (r.getNull() ? "Unavailable" : "");
-						Object[] row = {r.getName(), "", setToNull, r.getType(), (r.getLen() != -1 ? r.getLen() : ""), r.getKeyStatus()};
-						model.addRow(row);
+			    		Object[] row;
+						if(!r.canBeNull()) {
+							row = new Object[]{r.getName(), "", "Unavailable", r.getType(), (r.getLen() != -1 ? r.getLen() : ""), r.getKeyStatus()};
+							model.addRow(row);
+						}
+						else {
+							JComboBox<String> n = new JComboBox<String>();
+				    		n.addItem("Set to NULL");
+				    		n.addItem("Not NULL");
+				    		row = new Object[]{r.getName(), "", null, r.getType(), (r.getLen() != -1 ? r.getLen() : ""), r.getKeyStatus()};
+				    		model.addRow(row);
+				    		table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(n));
+						}
 			    	}
 			    	status.setText("Table schema fetched. Please enter the values by double clicking the cells.");
 			    }
 			}
 		});
+		
 		panel.setLayout(new BorderLayout(0, 0));
 		panel.add(tables);
 		
