@@ -4,4 +4,5 @@ abstract class Constraint {
 	String type;
 	int compareTo;
 	public abstract String toString();
+	public abstract String getAttr();
 }
