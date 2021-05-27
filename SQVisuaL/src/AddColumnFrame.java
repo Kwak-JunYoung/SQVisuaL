@@ -205,7 +205,7 @@ public class AddColumnFrame extends JFrame {
 					else if (Null_No.isSelected())
 						tuple[3] = "No";
 					else
-						tuple[3] = "UnKnown";
+						tuple[3] = "Unknown";
 
 					if (Unique_Yes.isSelected())
 						tuple[4] = "Yes";

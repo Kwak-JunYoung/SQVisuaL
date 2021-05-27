@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class AddTable extends JFrame {
@@ -32,13 +33,10 @@ public class AddTable extends JFrame {
 		acf = new AddColumnFrame(this);
 		dcf = new DeleteColumnFrame();
 		String column[] = { "Column Name", "Data Type", "Primary Key?", "Can be NULL?", "Must be unique?" };
-		// String data[][]={ {"Name","VARCHAR", "No", "No", "No"},
-		// {"ID","VARCHAR","Yes", "-", "-"} };
 
 		table = new JTable(new DefaultTableModel(column, 0));
 
 		JScrollPane scrollPane = new JScrollPane();
-		// getContentPane().add(scrollPane, BorderLayout.CENTER);
 		scrollPane.setViewportView(table);
 
 		JPanel panel_1 = new JPanel();
@@ -98,12 +96,23 @@ public class AddTable extends JFrame {
 		});
 		Create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (tableName.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Please enter the table name.", "Error",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+
 				ArrayList<Integer> pkidx = new ArrayList<>(), unique = new ArrayList<>();
 				String q = "CREATE TABLE `" + tableName.getText() + "` (";
 				String pks = "PRIMARY KEY (";
 				String uni = "UNIQUE (";
 				DefaultTableModel model = (DefaultTableModel) table.getModel();
 				int rc = model.getRowCount();
+				if (rc == 0) {
+					JOptionPane.showMessageDialog(null, "There are no columns.", "Error",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
 				for (int i = 0; i < rc; i++) {
 					q += "`" + (String) model.getValueAt(i, 0) + "` " + (String) model.getValueAt(i, 1);
 					if (((String) model.getValueAt(i, 2)).equals("Yes"))
