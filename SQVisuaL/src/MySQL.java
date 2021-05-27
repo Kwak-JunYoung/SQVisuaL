@@ -2,7 +2,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public final class MySQL extends DataProvider {
-	// Connection c;
 	String host;
 	int port;
 	String db;
@@ -14,7 +13,6 @@ public final class MySQL extends DataProvider {
 		try {
 			String uri = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.db;
 			this.c = DriverManager.getConnection(uri, this.username, this.password);
-			// System.out.println("Connection to MySQL database has been established.");
 			this.isOpen = true;
 			return true;
 		} catch (SQLException e) {

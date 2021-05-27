@@ -2,6 +2,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class RunProgram {
 	InsertDataFrame idf;
 	SQVisuaL sql;
@@ -45,6 +47,14 @@ public class RunProgram {
 				cred.add(mscf.db.getText());
 				cred.add(mscf.user.getText());
 				cred.add(mscf.pw.getText());
+				for (String c : cred) {
+					if (c.equals("")) {
+						JOptionPane.showMessageDialog(null, "Not all fields have been entered.", "Error",
+								JOptionPane.INFORMATION_MESSAGE);
+						mscf.setEnabled(true);
+						return;
+					}
+				}
 				sql.setProvider("MySQL");
 				sql.setCred(cred);
 				sql.connect();
@@ -71,6 +81,12 @@ public class RunProgram {
 				slcf.setEnabled(false);
 				ArrayList<String> cred = new ArrayList<>();
 				cred.add(slcf.file.getText());
+				if (slcf.file.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Not all fields have been entered.", "Error",
+							JOptionPane.INFORMATION_MESSAGE);
+					slcf.setEnabled(true);
+					return;
+				}
 				sql.setProvider("SQLite");
 				sql.setCred(cred);
 				sql.connect();
