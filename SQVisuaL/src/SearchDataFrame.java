@@ -35,7 +35,7 @@ public class SearchDataFrame extends JFrame {
 
 	public SearchDataFrame(SQVisuaL sql, MainFrame mf) {
 
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		this.sql = sql;
 		this.updateTables();
@@ -63,13 +63,17 @@ public class SearchDataFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String cond = "";
-				for (int i = 0; i < constr.size(); i++) {
-					cond += constr.get(i).toString();
-					if (i != constr.size() - 1)
-						cond += " " + table.getValueAt(i, 2) + " ";
+				if (constr.size() == 0)
+					mf.updateTable(currentTable);
+				else {
+					String cond = "";
+					for (int i = 0; i < constr.size(); i++) {
+						cond += constr.get(i).toString();
+						if (i != constr.size() - 1)
+							cond += " " + table.getValueAt(i, 2) + " ";
+					}
+					mf.updateTable(currentTable, cond);
 				}
-				mf.updateTable(currentTable, cond);
 				mf.setTable();
 				setVisible(false);
 			}
@@ -168,7 +172,7 @@ public class SearchDataFrame extends JFrame {
 		ArrayList<MetaRow> rows = this.sql.getProvider().getTableInfo(tableName);
 		ArrayList<Pair<String, Boolean>> attrs = new ArrayList<Pair<String, Boolean>>();
 		List<String> numbers = Arrays.asList("INTEGER", "INT", "SMALLINT", "TINYINT", "MEDIUMINT", "BIGINT", "FLOAT",
-				"DOUBLE");
+				"DOUBLE", "REAL");
 		for (MetaRow r : rows) {
 			if (numbers.contains(r.getType().toUpperCase()))
 				attrs.add(new Pair<String, Boolean>(r.getName(), true));
@@ -184,20 +188,17 @@ public class SearchDataFrame extends JFrame {
 	}
 
 	public void addConstraint(Constraint c) {
-		/*
-		 * boolean updated = false; for (int i = 0; i < this.constr.size(); i++) { if
-		 * (c.getAttr().equals(this.constr.get(i).getAttr())) { this.constr.set(i, c);
-		 * updated = true; break; } } if (!updated)
-		 */
 		this.constr.add(c);
 		this.updateConstrList();
 	}
 
 	private void updateConstrList() {
 		ArrayList<String> connector = new ArrayList<>();
-		for(int i = 0; i < this.constr.size() - 1; i++) {
-			if(this.table.getValueAt(i, 2) == null) connector.add("AND");
-			else connector.add((String) this.table.getValueAt(i, 2));
+		for (int i = 0; i < this.constr.size() - 1; i++) {
+			if (this.table.getValueAt(i, 2) == null)
+				connector.add("AND");
+			else
+				connector.add((String) this.table.getValueAt(i, 2));
 		}
 		this.model.setRowCount(0);
 		for (int i = 0; i < this.constr.size(); i++) {
@@ -206,9 +207,9 @@ public class SearchDataFrame extends JFrame {
 			n.addItem("OR");
 			Object[] row;
 			if (i != this.constr.size() - 1)
-				row = new Object[] {this.constr.get(i).getAttr(), this.constr.get(i).getCond(), connector.get(i)};
+				row = new Object[] { this.constr.get(i).getAttr(), this.constr.get(i).getCond(), connector.get(i) };
 			else
-				row = new Object[] {this.constr.get(i).getAttr(), this.constr.get(i).getCond(), null};
+				row = new Object[] { this.constr.get(i).getAttr(), this.constr.get(i).getCond(), null };
 			this.model.addRow(row);
 			table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(n));
 		}

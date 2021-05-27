@@ -171,8 +171,9 @@ public class MainFrame extends JFrame {
 		table.clearSelection();
 		String q = "SELECT * FROM " + currentTable;
 		if (cond != null)
-			q += " WHERE " + cond + ";";
-
+			q += " WHERE " + cond;
+		q += ";";
+		System.out.println(q);
 		ResultSet r = sql.getProvider().query(q);
 		ArrayList<String[]> table = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
