@@ -10,6 +10,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -30,7 +31,7 @@ class InsertDataFrame extends JFrame {
 	public InsertDataFrame(SQVisuaL sql, MainFrame mf) {
 		super("SQVisuaL - Insert new data");
 		this.sql = sql;
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		this.updateTables();
 		String[] columns = { "Target attribute", "Value", "Set to NULL", "Data type", "Max length", "Key status" };
@@ -79,8 +80,16 @@ class InsertDataFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				table.clearSelection();
-				//if (table.isEditing()) table.getCellEditor().stopCellEditing();
 				int rc = model.getRowCount();
+				for (int i = 0; i < rc; i++) {
+					if (table.getValueAt(i, 1) == null || table.getValueAt(i, 1).equals("")) {
+						if (!table.getValueAt(i, 2).equals("Set to NULL"))
+							JOptionPane.showMessageDialog(null,
+									"Please set values for all attributes, or set them as NULL.", "Error",
+									JOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+				}
 				String name = "(", data = "(", q = "INSERT INTO `" + currentTable + "` ";
 				for (int i = 0; i < rc; i++) {
 					name += "`" + (String) model.getValueAt(i, 0) + "`";
