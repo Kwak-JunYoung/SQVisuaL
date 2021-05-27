@@ -27,6 +27,7 @@ public class MainFrame extends JFrame {
 	private DefaultTableModel model;
 	private boolean allowEdit, internalEdit;
 	private JLabel errormsg;
+	private String cond;
 
 	public MainFrame(SQVisuaL sql) {
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -113,8 +114,7 @@ public class MainFrame extends JFrame {
 			this.errormsg.setText(e.getMessage());
 		else
 			this.errormsg.setText("Record updated successfully");
-		this.updateQuery(q);
-		this.updateTable(this.currentTable);
+		this.updateTable(this.currentTable, this.cond);
 		if (this.show.size() == 0)
 			this.setTable();
 		else
@@ -162,9 +162,17 @@ public class MainFrame extends JFrame {
 	}
 
 	public void updateTable(String currentTable) {
+		this.updateTable(currentTable, null);
+	}
+
+	public void updateTable(String currentTable, String cond) {
 		this.currentTable = currentTable;
+		this.cond = cond;
 		table.clearSelection();
-		String q = "SELECT * FROM " + currentTable + ";";
+		String q = "SELECT * FROM " + currentTable;
+		if (cond != null)
+			q += " WHERE " + cond + ";";
+		System.out.println(q);
 		ResultSet r = sql.getProvider().query(q);
 		ArrayList<String[]> table = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();

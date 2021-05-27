@@ -1,6 +1,7 @@
 class IntConstraint extends Constraint {
+	private double compareTo;
 
-	public IntConstraint(String table, String attr, String type, int compareTo) {
+	public IntConstraint(String table, String attr, String type, double compareTo) {
 		this.table = table;
 		this.attr = attr;
 		this.type = type;
@@ -17,4 +18,8 @@ class IntConstraint extends Constraint {
 		return this.attr;
 	}
 
+	@Override
+	public String getCond() {
+		return this.type + " " + this.compareTo;
+	}
 }

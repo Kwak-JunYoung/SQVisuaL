@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -150,7 +151,7 @@ class InsertDataFrame extends JFrame {
 							JComboBox<String> n = new JComboBox<String>();
 							n.addItem("Set to NULL");
 							n.addItem("Not NULL");
-							row = new Object[] { r.getName(), "", null, r.getType(),
+							row = new Object[] { r.getName(), "", "Not NULL", r.getType(),
 									(r.getLen() != -1 ? r.getLen() : ""), r.getKeyStatus() };
 							model.addRow(row);
 							table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(n));

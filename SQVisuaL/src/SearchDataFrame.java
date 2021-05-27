@@ -26,7 +26,7 @@ import javax.swing.JTextField;
 public class SearchDataFrame extends JFrame {
 	public ArrayList<String> t;
 	public JTable table;
-	public JButton add, delete, cancel, create;
+	public JButton add, delete, cancel, execute;
 	public DefaultTableModel model;
 	private JScrollPane scrollPane;
 	private JComboBox<String> tables;
@@ -36,7 +36,6 @@ public class SearchDataFrame extends JFrame {
 	private SearchDataAddFrame sdaf;
 	private String currentTable;
 	private JLabel status;
-
 	private ArrayList<Constraint> constr;
 
 	public SearchDataFrame(SQVisuaL sql, MainFrame mf) {
@@ -45,6 +44,7 @@ public class SearchDataFrame extends JFrame {
 		setBounds(100, 100, 450, 300);
 		this.sql = sql;
 		this.updateTables();
+		this.constr = new ArrayList<Constraint>();
 
 		JPanel panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.SOUTH);
@@ -62,12 +62,36 @@ public class SearchDataFrame extends JFrame {
 		panel_1.add(cancel);
 		cancel.addActionListener(new cancelButtonClickListener());
 
-		create = new JButton("Create");
-		panel_1.add(create);
-		create.addActionListener(new createButtonClickListener());
+		execute = new JButton("Execute");
+		panel_1.add(execute);
+		execute.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String cond = "";
+				for (int i = 0; i < constr.size(); i++) {
+					cond += constr.get(i).toString();
+					if (i != constr.size() - 1)
+						cond += " " + table.getValueAt(i, 2) + " ";
+				}
+				mf.updateTable(currentTable, cond);
+				mf.setTable();
+				setVisible(false);
+			}
+
+		});
 
 		String[] columns = { "Column Name", "Constraint", "Connector" };
-		table = new JTable(new DefaultTableModel(columns, 0));
+		table = new JTable(new DefaultTableModel(columns, 0)) {
+			public boolean isCellEditable(int row, int column) {
+				if (column != 2)
+					return false;
+				else if (this.getModel().getRowCount() - 1 == row)
+					return false;
+				else
+					return true;
+			}
+		};
 		model = (DefaultTableModel) table.getModel();
 
 		scrollPane = new JScrollPane();
@@ -109,13 +133,6 @@ public class SearchDataFrame extends JFrame {
 		});
 	}
 
-	class createButtonClickListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			setVisible(false);
-		}
-
-	}
-
 	class cancelButtonClickListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			DefaultTableModel tm = (DefaultTableModel) table.getModel();
@@ -127,9 +144,11 @@ public class SearchDataFrame extends JFrame {
 
 	class deleteButtonClickListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			int row = table.getSelectedRow();
-			DefaultTableModel tm = (DefaultTableModel) table.getModel();
-			tm.removeRow(row);
+			int target = table.getSelectedRow();
+			model.removeRow(target);
+			constr.remove(target);
+			if (model.getRowCount() != 0)
+				model.setValueAt(null, model.getRowCount() - 1, 2);
 		}
 
 	}
@@ -156,12 +175,12 @@ public class SearchDataFrame extends JFrame {
 		List<String> numbers = Arrays.asList("INTEGER", "INT", "SMALLINT", "TINYINT", "MEDIUMINT", "BIGINT", "FLOAT",
 				"DOUBLE");
 		for (MetaRow r : rows) {
-			if (numbers.contains(r.getType()))
+			if (numbers.contains(r.getType().toUpperCase()))
 				attrs.add(new Pair<String, Boolean>(r.getName(), true));
 			else
 				attrs.add(new Pair<String, Boolean>(r.getName(), false));
 		}
-		this.sdaf = new SearchDataAddFrame(this, attrs);
+		this.sdaf = new SearchDataAddFrame(currentTable, this, attrs);
 	}
 
 	public void setButtonVisibility(boolean v) {
@@ -170,20 +189,33 @@ public class SearchDataFrame extends JFrame {
 	}
 
 	public void addConstraint(Constraint c) {
-		boolean updated = false;
-		for (int i = 0; i < this.constr.size(); i++) {
-			if (c.getAttr().equals(this.constr.get(i).getAttr()))
-				this.constr.set(i, c);
-			updated = true;
-			break;
-		}
-		if (!updated)
-			this.constr.add(c);
+		/*
+		 * boolean updated = false; for (int i = 0; i < this.constr.size(); i++) { if
+		 * (c.getAttr().equals(this.constr.get(i).getAttr())) { this.constr.set(i, c);
+		 * updated = true; break; } } if (!updated)
+		 */
+		this.constr.add(c);
 		this.updateConstrList();
 	}
 
 	private void updateConstrList() {
+		ArrayList<String> connector = new ArrayList<>();
+		for(int i = 0; i < this.constr.size() - 1; i++) {
+			if(this.table.getValueAt(i, 2) == null) connector.add("AND");
+			else connector.add((String) this.table.getValueAt(i, 2));
+		}
 		this.model.setRowCount(0);
-
+		for (int i = 0; i < this.constr.size(); i++) {
+			JComboBox<String> n = new JComboBox<String>();
+			n.addItem("AND");
+			n.addItem("OR");
+			Object[] row;
+			if (i != this.constr.size() - 1)
+				row = new Object[] {this.constr.get(i).getAttr(), this.constr.get(i).getCond(), connector.get(i)};
+			else
+				row = new Object[] {this.constr.get(i).getAttr(), this.constr.get(i).getCond(), null};
+			this.model.addRow(row);
+			table.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(n));
+		}
 	}
 }

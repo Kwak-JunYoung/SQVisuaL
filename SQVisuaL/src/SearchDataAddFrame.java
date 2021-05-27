@@ -1,10 +1,8 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -18,14 +16,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.JSplitPane;
 import javax.swing.JRadioButton;
-import javax.swing.SwingConstants;
 
 public class SearchDataAddFrame extends JFrame {
 
 	public JButton apply, cancel;
-	private String a, b;
 	private JPanel contentPane;
 	public JTextField column, constraint;
 	private JPanel panel_1;
@@ -50,11 +45,13 @@ public class SearchDataAddFrame extends JFrame {
 	private ArrayList<Pair<String, Boolean>> attrs;
 	private JRadioButton eqtxt;
 	private JRadioButton neqtxt;
+	private String currentTable;
 
-	public SearchDataAddFrame(SearchDataFrame sdf, ArrayList<Pair<String, Boolean>> attrs) {
+	public SearchDataAddFrame(String currentTable, SearchDataFrame sdf, ArrayList<Pair<String, Boolean>> attrs) {
 
 		this.sdf = sdf;
 		this.attrs = attrs;
+		this.currentTable = currentTable;
 		setSize(487, 301);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
@@ -99,7 +96,7 @@ public class SearchDataAddFrame extends JFrame {
 
 		textComp = new JTextField();
 		panel_3.add(textComp);
-		textComp.setColumns(10);
+		textComp.setColumns(1);
 
 		panel_4 = new JPanel();
 		panel_1.add(panel_4);
@@ -132,7 +129,7 @@ public class SearchDataAddFrame extends JFrame {
 
 		numComp = new JTextField();
 		panel_4.add(numComp);
-		numComp.setColumns(10);
+		numComp.setColumns(1);
 
 		panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.NORTH);
@@ -157,7 +154,48 @@ public class SearchDataAddFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (attrs.get(attrList.getSelectedIndex() - 1).getSecond()) {
+					String t;
+					if (eq.isSelected())
+						t = "=";
+					else if (neq.isSelected())
+						t = "<>";
+					else if (gt.isSelected())
+						t = ">";
+					else if (gte.isSelected())
+						t = ">=";
+					else if (lt.isSelected())
+						t = "<";
+					else if (lte.isSelected())
+						t = "<=";
+					else
+						return;
+					sdf.addConstraint(new IntConstraint(currentTable, (String) attrList.getSelectedItem(), t,
+							Double.parseDouble(numComp.getText())));
+				} else {
+					String t;
+					if (eqtxt.isSelected())
+						t = "=";
+					else if (neqtxt.isSelected())
+						t = "<>";
+					else if (like.isSelected())
+						t = "LIKE";
+					else if (notLike.isSelected())
+						t = "NOT LIKE";
+					else
+						return;
+					sdf.addConstraint(new StringConstraint(currentTable, (String) attrList.getSelectedItem(), t,
+							textComp.getText()));
+				}
+				setVisible(false);
+			}
 
+		});
+		cancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
 			}
 
 		});
