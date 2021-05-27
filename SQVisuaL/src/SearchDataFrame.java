@@ -35,7 +35,7 @@ public class SearchDataFrame extends JFrame {
 
 	public SearchDataFrame(SQVisuaL sql, MainFrame mf) {
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		this.sql = sql;
 		this.updateTables();

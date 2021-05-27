@@ -26,7 +26,7 @@ public class AddColumnFrame extends JFrame {
 
 	public AddColumnFrame(AddTable at) {
 		setSize(488, 300);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

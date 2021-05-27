@@ -13,6 +13,7 @@ class MySQLConnFrame extends JFrame {
 
 	public MySQLConnFrame() {
 		super("SQVisuaL - MySQL");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new GridLayout(6, 1));
 
 		JPanel panel = new JPanel();

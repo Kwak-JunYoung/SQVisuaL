@@ -53,7 +53,7 @@ public class SearchDataAddFrame extends JFrame {
 		this.attrs = attrs;
 		this.currentTable = currentTable;
 		setSize(487, 301);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

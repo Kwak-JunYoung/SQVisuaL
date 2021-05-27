@@ -30,7 +30,7 @@ class InsertDataFrame extends JFrame {
 	public InsertDataFrame(SQVisuaL sql, MainFrame mf) {
 		super("SQVisuaL - Insert new data");
 		this.sql = sql;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		this.updateTables();
 		String[] columns = { "Target attribute", "Value", "Set to NULL", "Data type", "Max length", "Key status" };

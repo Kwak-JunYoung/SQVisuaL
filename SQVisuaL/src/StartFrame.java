@@ -7,6 +7,7 @@ class StartFrame extends JFrame {
 
 	public StartFrame() {
 		super("SQVisuaL");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(300, 200);
 		this.setLayout(null);
 		JLabel l;
