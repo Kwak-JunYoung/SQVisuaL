@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -200,8 +201,9 @@ public class MainFrame extends JFrame {
 						row[i] = r.getString(i + 1);
 					table.add(row);
 				}
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 		this.internalTable = table;

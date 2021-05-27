@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public final class MySQL extends DataProvider {
 	String host;
 	int port;
@@ -16,7 +18,8 @@ public final class MySQL extends DataProvider {
 			this.isOpen = true;
 			return true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 			return false;
 		}
 	}
@@ -27,7 +30,8 @@ public final class MySQL extends DataProvider {
 			this.c.close();
 			this.isOpen = false;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -38,7 +42,8 @@ public final class MySQL extends DataProvider {
 			ResultSet r = s.executeQuery(q);
 			return r;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 			return null;
 		}
 
@@ -50,7 +55,8 @@ public final class MySQL extends DataProvider {
 													// https://stackoverflow.com/questions/1812891/java-escape-string-to-prevent-sql-injection
 			return s.executeUpdate(q);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 			return 0;
 		}
 	}
@@ -106,12 +112,14 @@ public final class MySQL extends DataProvider {
 						rows.add(new MetaRow(r.getString(1), canBeNull, r.getString(3), r.getInt(4), r.getString(5)));
 					}
 				} catch (SQLException e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "SQL Error",
+							JOptionPane.INFORMATION_MESSAGE);
 					return null;
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 		return rows;
 	}
@@ -128,7 +136,8 @@ public final class MySQL extends DataProvider {
 				while (r.next())
 					tables.add(r.getString(1));
 		} catch (SQLException e1) {
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 		return tables;
 	}

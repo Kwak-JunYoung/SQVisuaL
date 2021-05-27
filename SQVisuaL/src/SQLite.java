@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class SQLite extends DataProvider {
 	String path;
 
@@ -35,7 +37,7 @@ public class SQLite extends DataProvider {
 			this.c.close();
 			this.isOpen = false;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -47,7 +49,7 @@ public class SQLite extends DataProvider {
 			ResultSet r = s.executeQuery(q);
 			return r;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error", JOptionPane.INFORMATION_MESSAGE);
 			return null;
 		}
 	}
@@ -59,7 +61,8 @@ public class SQLite extends DataProvider {
 													// https://stackoverflow.com/questions/1812891/java-escape-string-to-prevent-sql-injection
 			return s.executeUpdate(q);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 			return 0;
 		}
 	}
@@ -86,16 +89,18 @@ public class SQLite extends DataProvider {
 			if (r != null) {
 				try {
 					while (r.next()) {
-						rows.add(new MetaRow(r.getString(2), !(r.getInt(4) != 0 || r.getInt(6) == 1), r.getString(3), -1,
-								(r.getInt(6) == 1 ? "PRI" : "")));
+						rows.add(new MetaRow(r.getString(2), !(r.getInt(4) != 0 || r.getInt(6) == 1), r.getString(3),
+								-1, (r.getInt(6) == 1 ? "PRI" : "")));
 					}
 				} catch (SQLException e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "SQL Error",
+							JOptionPane.INFORMATION_MESSAGE);
 					return null;
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 			return null;
 		}
 		return rows;
@@ -112,7 +117,8 @@ public class SQLite extends DataProvider {
 				while (r.next())
 					tables.add(r.getString(1));
 		} catch (SQLException e1) {
-			e1.printStackTrace();
+			JOptionPane.showMessageDialog(null, e1.getMessage(), "SQL Error",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 		return tables;
 	}
