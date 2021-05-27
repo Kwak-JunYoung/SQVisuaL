@@ -3,6 +3,8 @@ abstract class Constraint {
 	String attr;
 	String type;
 	int compareTo;
+
 	public abstract String toString();
+
 	public abstract String getAttr();
 }

@@ -9,6 +9,7 @@ public class RunProgram {
 	SQVisuaL sql;
 	ArrayList<String> tableList;
 	SearchDataFrame sdf;
+
 	public void run() {
 		sql = new SQVisuaL();
 		MainFrame mf = new MainFrame(sql);
@@ -20,76 +21,76 @@ public class RunProgram {
 		AddTable at = new AddTable(mf, sql);
 		idf = null;// = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        st.setVisible(false);
-		        mscf.setVisible(true);
-		    }
+			public void actionPerformed(ActionEvent e) {
+				st.setVisible(false);
+				mscf.setVisible(true);
+			}
 		});
 		st.SQLite_B.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        st.setVisible(false);
-		        slcf.setVisible(true);
-		    }
+			public void actionPerformed(ActionEvent e) {
+				st.setVisible(false);
+				slcf.setVisible(true);
+			}
 		});
 		mscf.cancel.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		    	st.setVisible(true);
-		        mscf.setVisible(false);
-		    }
+			public void actionPerformed(ActionEvent e) {
+				st.setVisible(true);
+				mscf.setVisible(false);
+			}
 		});
 		mscf.confirm.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent ev) {
-		    	mscf.setEnabled(false);
-		    	ArrayList<String> cred = new ArrayList<>();
-		    	cred.add(mscf.host.getText());
-		    	cred.add(mscf.port.getText());
-		    	cred.add(mscf.db.getText());
-		    	cred.add(mscf.user.getText());
-		    	cred.add(mscf.pw.getText());
-		    	sql.setProvider("MySQL");
-		    	sql.setCred(cred);
-		    	sql.connect();
-		    	if(sql.connect()) {
-		    		mf.setVisible(true);
-		    		mscf.setVisible(false);
-		    		mf.setTitle("SQVisuaL - " + mscf.host.getText());
-		    		if(sql.getProvider().getTables().size() != 0) {
-		    			mf.updateTable(sql.getProvider().getTables().get(0));
-		    			mf.setTable();
-		    		}
-		    	}
-		    	mscf.setEnabled(true);
-		    }
+			public void actionPerformed(ActionEvent ev) {
+				mscf.setEnabled(false);
+				ArrayList<String> cred = new ArrayList<>();
+				cred.add(mscf.host.getText());
+				cred.add(mscf.port.getText());
+				cred.add(mscf.db.getText());
+				cred.add(mscf.user.getText());
+				cred.add(mscf.pw.getText());
+				sql.setProvider("MySQL");
+				sql.setCred(cred);
+				sql.connect();
+				if (sql.connect()) {
+					mf.setVisible(true);
+					mscf.setVisible(false);
+					mf.setTitle("SQVisuaL - " + mscf.host.getText());
+					if (sql.getProvider().getTables().size() != 0) {
+						mf.updateTable(sql.getProvider().getTables().get(0));
+						mf.setTable();
+					}
+				}
+				mscf.setEnabled(true);
+			}
 		});
 		slcf.cancel.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		    	st.setVisible(true);
-		        slcf.setVisible(false);
-		    }
+			public void actionPerformed(ActionEvent e) {
+				st.setVisible(true);
+				slcf.setVisible(false);
+			}
 		});
 		slcf.confirm.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent ev) {
-		    	slcf.setEnabled(false);
-		    	ArrayList<String> cred = new ArrayList<>();
-		    	cred.add(slcf.file.getText());
-		    	sql.setProvider("SQLite");
-		    	sql.setCred(cred);
-		    	sql.connect();
-		    	if(sql.connect()) {
-		    		mf.setVisible(true);
-		    		slcf.setVisible(false);
-		    		mf.setTitle("SQVisuaL - " + slcf.file.getText());
-		    		if(sql.getProvider().getTables().size() != 0) {
-		    			mf.updateTable(sql.getProvider().getTables().get(0));
-		    			mf.setTable();
-		    		}
-		    	}
-		    	slcf.setEnabled(true);
-		    }
+			public void actionPerformed(ActionEvent ev) {
+				slcf.setEnabled(false);
+				ArrayList<String> cred = new ArrayList<>();
+				cred.add(slcf.file.getText());
+				sql.setProvider("SQLite");
+				sql.setCred(cred);
+				sql.connect();
+				if (sql.connect()) {
+					mf.setVisible(true);
+					slcf.setVisible(false);
+					mf.setTitle("SQVisuaL - " + slcf.file.getText());
+					if (sql.getProvider().getTables().size() != 0) {
+						mf.updateTable(sql.getProvider().getTables().get(0));
+						mf.setTable();
+					}
+				}
+				slcf.setEnabled(true);
+			}
 		});
 		mf.searchData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sdf = new SearchDataFrame(sql);
+				sdf = new SearchDataFrame(sql, mf);
 				sdf.setVisible(true);
 			}
 		});
@@ -99,7 +100,7 @@ public class RunProgram {
 				idf.setVisible(true);
 			}
 		});
-		mf.newTable.addActionListener(new ActionListener(){
+		mf.newTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				at.setVisible(true);
 			}

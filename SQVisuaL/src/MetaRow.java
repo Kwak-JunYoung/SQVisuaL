@@ -5,6 +5,7 @@ public class MetaRow {
 	private String dataType;
 	private int maxLen;
 	private String key;
+
 	public MetaRow(String name, boolean canBeNull, String dataType, int maxLen, String key) {
 		this.name = name;
 		this.canBeNull = canBeNull;
@@ -12,18 +13,23 @@ public class MetaRow {
 		this.maxLen = maxLen;
 		this.key = key;
 	}
+
 	public String getName() {
 		return this.name;
 	}
+
 	public boolean canBeNull() {
 		return this.canBeNull;
 	}
+
 	public String getType() {
 		return this.dataType;
 	}
+
 	public int getLen() {
 		return this.maxLen;
 	}
+
 	public String getKeyStatus() {
 		return this.key;
 	}

@@ -6,8 +6,8 @@ class IntConstraint extends Constraint {
 		this.type = type;
 		this.compareTo = compareTo;
 	}
-	
-	@Override	
+
+	@Override
 	public String toString() {
 		return this.table + "." + this.attr + " " + this.type + " " + String.valueOf(this.compareTo);
 	}
@@ -16,6 +16,5 @@ class IntConstraint extends Constraint {
 	public String getAttr() {
 		return this.attr;
 	}
-	
-	
+
 }

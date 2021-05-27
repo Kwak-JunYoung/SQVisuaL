@@ -1,10 +1,10 @@
 
-public class SelectQueryBuilder extends QueryBuilder{
-	
+public class SelectQueryBuilder extends QueryBuilder {
+
 	@Override
 	String buildQuery() {
 		String q = "";
-		for(int i = 0; i < this.con.size() - 1; i++) {
+		for (int i = 0; i < this.con.size() - 1; i++) {
 			q += this.con.get(i).toString();
 			q += " AND ";
 		}

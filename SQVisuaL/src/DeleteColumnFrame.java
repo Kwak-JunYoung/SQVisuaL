@@ -26,31 +26,31 @@ public class DeleteColumnFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(2, 2));
-		
+
 		JLabel lblNewLabel = new JLabel("Column Name: ");
 		contentPane.add(lblNewLabel);
-		
-		ColumnName= new JTextField();
+
+		ColumnName = new JTextField();
 		contentPane.add(ColumnName);
 		ColumnName.setColumns(10);
-		
+
 		Apply = new JButton("Apply");
 		contentPane.add(Apply);
-		
+
 		Cancel = new JButton("Cancel");
 		contentPane.add(Cancel);
-		
+
 		Apply.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        setVisible(false);
-		    }
-		});		
-		
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+
 		Cancel.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        setVisible(false);
-		    }
-		});	
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		setSize(250, 150);
 	}
 
