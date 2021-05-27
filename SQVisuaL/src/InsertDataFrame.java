@@ -1,6 +1,12 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -8,32 +14,33 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.JScrollPane;
-import javax.swing.JList;
-import java.awt.FlowLayout;
-import javax.swing.AbstractListModel;
 import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
 
 class InsertDataFrame extends JFrame {
-	private boolean tableSelected;
+	public String currentTable;
 	public JTable table;
-	public JButton edit, cancel, execute;
-	private JButton update;
+	public JButton cancel, execute;
 	private JComboBox<String> tables;
-	public InsertDataFrame(ArrayList<String> t) {
+	private SQVisuaL sql;
+	private JLabel status;
+	private JCheckBox closeOnExe;
+	public ArrayList<String> t;
+	public InsertDataFrame(SQVisuaL sql, MainFrame mf) {
 		super("SQVisuaL - Insert new data");
-		this.tableSelected = false;
+		this.sql = sql;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 500);
+		this.updateTables();
+		String[] columns = {"Target attribute", "Value", "Set to NULL", "Data type", "Max length", "Key status"};
 		
-		String[] columns = {"Target attribute", "Value", "Mandatory"};
-		
-		table = new JTable(new DefaultTableModel(columns, 0));
+		table = new JTable(new DefaultTableModel(columns, 0)) {
+			public boolean isCellEditable(int row, int column) {                
+                return column == 1;               
+			}
+		};
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		
 		
@@ -43,39 +50,96 @@ class InsertDataFrame extends JFrame {
 		
 		JPanel panel_1 = new JPanel();
 		getContentPane().add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new GridLayout(2, 2));
-		
-		edit = new JButton("Edit value");
-		edit.setVisible(false);
-		panel_1.add(edit);
-		
-		JLabel placeholder = new JLabel("");
-		panel_1.add(placeholder);
+		panel_1.setLayout(new GridLayout(1, 2));
 		
 		cancel = new JButton("Cancel");
+		cancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		panel_1.add(cancel);
 		
 		execute = new JButton("Execute");
+		execute.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
+				if (table.isEditing()) table.getCellEditor().stopCellEditing();
+				int rc = model.getRowCount();
+				String name = "(", data = "(", q = "INSERT INTO `" + currentTable + "` ";
+	    		for (int i = 0; i < rc; i++) {
+	    			name += "`" + (String) model.getValueAt(i, 0) + "`";
+	    			data += "'" + (String) model.getValueAt(i, 1) + "'";
+	    			if(i !=  rc - 1) {
+	    				name += ", ";
+	    				data += ", ";
+	    			}
+	    		}
+	    		name += ")";
+	    		data += ")";
+	    		q += name;
+	    		q += " VALUES ";
+	    		q += data;
+	    		q += ";";
+	    		sql.getProvider().updateQuery(q);
+	    		if(closeOnExe.isSelected()) {
+	    			setVisible(false);
+	    			mf.updateTable(currentTable);
+	    			mf.setTable();
+	    		}
+			}
+		});
 		execute.setVisible(false);
 		panel_1.add(execute);
 		
+		closeOnExe = new JCheckBox("Close window on execution");
+		panel_1.add(closeOnExe);
+		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.NORTH);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		tables = new JComboBox<String>();
 		for(String name : t) tables.addItem(name);
+		tables.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+			    	currentTable = (String) e.getItem();
+			    	if(currentTable.equals("Please select a table...")) {
+			    		execute.setVisible(false);
+			    		return;
+			    	}
+			    	execute.setVisible(true);
+			    	status.setText("Getting table schema. Please wait.");
+			    	int rc = model.getRowCount();
+		    		for (int i = rc - 1; i >= 0; i--) {
+		    		    model.removeRow(i);
+		    		}
+			    	ArrayList<MetaRow> arr = sql.getProvider().getTableInfo(currentTable);
+			    	for(MetaRow r : arr) {
+			    		String setToNull = (r.getNull() ? "Unavailable" : "");
+						Object[] row = {r.getName(), "", setToNull, r.getType(), (r.getLen() != -1 ? r.getLen() : ""), r.getKeyStatus()};
+						model.addRow(row);
+			    	}
+			    	status.setText("Table schema fetched. Please enter the values by double clicking the cells.");
+			    }
+			}
+		});
+		panel.setLayout(new BorderLayout(0, 0));
 		panel.add(tables);
 		
-		update = new JButton("Refresh tables");
-		panel.add(update);
-		
-		Object[] row = { "Attr1", "Val1" };
-		
-	    model.addRow(row);
+		status = new JLabel("Please choose a table first.");
+		panel.add(status, BorderLayout.SOUTH);
+	    
 	}
-	public void revealButtons() {
-		this.edit.setVisible(true);
-		this.execute.setVisible(true);
+	public void updateTables() {
+		if(this.sql.connect()) {
+			ArrayList<String> tables = sql.getProvider().getTables();
+			tables.add(0, "Please select a table...");
+			if(tables.size() != 0) t = tables;
+    	}
 	}
 }

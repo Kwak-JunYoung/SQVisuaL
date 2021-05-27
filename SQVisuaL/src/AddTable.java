@@ -15,6 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ListSelectionModel;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
@@ -24,17 +27,20 @@ public class AddTable extends JFrame {
 	public JButton Add, Delete, Cancel, Create;
 	private JButton btnNewButton;
 	private JComboBox comboBox;
+	private AddColumnFrame acf;
+	private DeleteColumnFrame dcf;
+	private SQVisuaL sql;
 
 
    /**
     * Launch the application.
     */
 
-
    /**
     * Create the frame.
     */
-   public AddTable() {
+   public AddTable(SQVisuaL sql) {
+	acf = new AddColumnFrame(this);
 	   String column[]={"Column Name","Data Type","Primary Key?", "Can be NULL?", "Must be unique?"};
 	   String data[][]={ {"Name","VARCHAR", "No", "No", "No"},    
 			   {"ID","VARCHAR","Yes", "-", "-"}    };
@@ -45,18 +51,18 @@ public class AddTable extends JFrame {
    	JScrollPane scrollPane = new JScrollPane();
    	getContentPane().add(scrollPane, BorderLayout.CENTER);
 	scrollPane.setViewportView(table);
-
+	model.addRow(data);
 	
 	JPanel panel_1 = new JPanel();
 	getContentPane().add(panel_1, BorderLayout.SOUTH);
 	panel_1.setLayout(new GridLayout(2, 2));
 	
-	Add = new JButton("Add Table");
+	Add = new JButton("Add Column");
 	Add.setVisible(true);
 	panel_1.add(Add);
 	
-	Delete = new JButton("Delete Table");
-	Add.setVisible(true);
+	Delete = new JButton("Delete Column");
+	Delete.setVisible(true);
 	panel_1.add(Delete);
 	
 	Cancel = new JButton("Cancel");
@@ -78,7 +84,23 @@ public class AddTable extends JFrame {
 	panel.add(btnNewButton);
 
 	setSize(500, 400);
-
+	Add.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			acf.setVisible(true);
+			((DefaultTableModel) table.getModel()).addRow(AddColumnFrame.getTuple());
+		}
+	});
+	Cancel.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+			setVisible(false);
+		}
+	});
+	Delete.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e) {
+			dcf.setVisible(true);
+		}
+	});
+	
    }
-
+// zoosuck
 }

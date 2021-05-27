@@ -21,6 +21,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 public class SearchDataFrame extends JFrame {
+
    public JTable table;
    public JButton add, delete, cancel, create;
    public DefaultTableModel model;
@@ -113,3 +114,4 @@ public class SearchDataFrame extends JFrame {
    
 
 }
+

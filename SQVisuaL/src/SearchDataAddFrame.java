@@ -20,9 +20,6 @@ public class SearchDataAddFrame extends JFrame {
    private String a, b;
    private JPanel contentPane;
    public JTextField column, constraint;
-   
-   SearchDataFrame sdf = new SearchDataFrame();
-
    public SearchDataAddFrame() {
 
       
@@ -39,49 +36,9 @@ public class SearchDataAddFrame extends JFrame {
       
       apply = new JButton("Apply");
       panel.add(apply);
-      apply.addActionListener(new applyButtonClickListener());
+      //apply.addActionListener(new applyButtonClickListener());
       
       cancel = new JButton("Cancel");
       panel.add(cancel);
-      
-      JPanel panel_1 = new JPanel();
-      contentPane.add(panel_1, BorderLayout.CENTER);
-      panel_1.setLayout(new GridLayout(2,2));
-      
-      JLabel lblNewLabel = new JLabel("Column");
-      panel_1.add(lblNewLabel);
-      
-      column = new JTextField();
-      panel_1.add(column);
-      column.setColumns(10);
-      
-      JLabel lblNewLabel_1 = new JLabel("Constraint");
-      panel_1.add(lblNewLabel_1);
-      
-      constraint = new JTextField();
-      panel_1.add(constraint);
-      constraint.setColumns(10);
-      
-      
    }
-   
-    class applyButtonClickListener implements ActionListener {
-         public void actionPerformed (ActionEvent e) {
-            a = column.getText();
-            b = constraint.getText();
-            
-            column.setText("");
-            constraint.setText("");
-           
-            Object[] row = {a, b};
-            sdf.model.addRow(row);
-            
-            sdf.setVisible(true);
-            
-         }
-         
-      }
-    
-    
-
 }

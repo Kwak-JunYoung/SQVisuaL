@@ -1,10 +1,7 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JPanel;
@@ -37,6 +34,7 @@ public class SQLiteConnFrame extends JFrame {
 		
 		file = new JTextField();
 		panel_1.add(file);
+		file.setText("testdb.db");
 		file.setColumns(10);
 	}
 }

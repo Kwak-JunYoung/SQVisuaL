@@ -6,16 +6,17 @@ import java.util.ArrayList;
 
 public class RunProgram {
 	InsertDataFrame idf;
+	SQVisuaL sql;
+	ArrayList<String> tableList;
 	public void run() {
-		SQVisuaL sql = new SQVisuaL();
-		MainFrame mf = new MainFrame();
+		sql = new SQVisuaL();
+		MainFrame mf = new MainFrame(sql);
 		StartFrame st = new StartFrame();
 		st.setVisible(true);
 		MySQLConnFrame mscf = new MySQLConnFrame();
 		SQLiteConnFrame slcf = new SQLiteConnFrame();
 		SearchDataFrame sdf = new SearchDataFrame();
-		AddTable at = new AddTable();
-		SearchDataAddFrame sdaf = new SearchDataAddFrame();
+		AddTable at = new AddTable(sql);
 		idf = null;// = new InsertDataFrame();
 		st.MySQL_B.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
@@ -50,19 +51,11 @@ public class RunProgram {
 		    	if(sql.connect()) {
 		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
-		    		ResultSet r = sql.getProvider().query("SELECT table_name FROM information_schema.tables WHERE table_schema NOT IN ('information_schema', 'mysql', 'performance_schema')");
-		    		if(r != null) {
-		    			ArrayList<String> tables = new ArrayList<>();
-						try {
-							while(r.next()) {
-								tables.add(r.getString(1));  
-							}
-						} catch(SQLException e) {
-							
-						}
-						if(tables.size() != 0) setTableList(tables);
-					}
-		    		
+		    		mf.setTitle("SQVisuaL - " + mscf.host.getText());
+		    		if(sql.getProvider().getTables().size() != 0) {
+		    			mf.updateTable(sql.getProvider().getTables().get(0));
+		    			mf.setTable();
+		    		}
 		    	}
 		    	mscf.setEnabled(true);
 		    }
@@ -77,23 +70,18 @@ public class RunProgram {
 		    public void actionPerformed(ActionEvent ev) {
 		    	slcf.setEnabled(false);
 		    	ArrayList<String> cred = new ArrayList<>();
-		    	cred.set(0, slcf.file.getText());
+		    	cred.add(slcf.file.getText());
 		    	sql.setProvider("SQLite");
 		    	sql.setCred(cred);
 		    	sql.connect();
 		    	if(sql.connect()) {
 		    		mf.setVisible(true);
 		    		mscf.setVisible(false);
-		    		ResultSet r = sql.getProvider().query("SELECT * FROM `chinook`"); //Temporary test code
-					if(r != null) {
-						try {
-							while(r.next()) {
-								System.out.println(r.getInt(1) + " " + r.getString(2) + " " + r.getInt(3) + " " + r.getDouble(4));  
-							}
-						} catch(SQLException e) {
-							
-						}
-					}
+		    		mf.setTitle("SQVisuaL - " + slcf.file.getText());
+		    		if(sql.getProvider().getTables().size() != 0) {
+		    			mf.updateTable(sql.getProvider().getTables().get(0));
+		    			mf.setTable();
+		    		}
 		    	}
 		    	slcf.setEnabled(true);
 		    }
@@ -105,6 +93,7 @@ public class RunProgram {
 		});
 		mf.insertData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				idf = new InsertDataFrame(sql, mf);
 				idf.setVisible(true);
 			}
 		});
@@ -113,27 +102,5 @@ public class RunProgram {
 				at.setVisible(true);
 			}
 		});
-		
-		at.Cancel.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				at.setVisible(false);
-			}
-		});	
-		
-		sdf.add.addActionListener(new ActionListener() {
-	          public void actionPerformed(ActionEvent e) {
-	             sdaf.setVisible(true);
-	             sdf.setVisible(false);
-	          }
-	      });  
-		sdaf.cancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               sdaf.setVisible(false);
-            }
-        });
-
-	}
-	public void setTableList(ArrayList<String> tables) {
-		this.idf = new InsertDataFrame(tables);
 	}
 }
