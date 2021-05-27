@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.mysql.cj.xdevapi.Table;
+
 //import SearchDataAddFrame.applyButtonClickListener;
 //import SearchDataAddFrame.cancelButtonClickListener;
 import javax.swing.JLabel;
@@ -16,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 
 public class AddColumnFrame extends JFrame {
-
+    static Object[] tuple = new Object[5];
 	private JPanel contentPane;
 	public JButton apply, cancel;
 	
@@ -27,7 +29,6 @@ public class AddColumnFrame extends JFrame {
 	private JRadioButton Null_Yes, Null_No, Null_Unknown;
 	private JRadioButton Unique_Yes, Unique_No, Unique_Unknown;
 	private AddTable at;
-
 	/**
 	 * Create the frame.
 	 */
@@ -46,7 +47,7 @@ public class AddColumnFrame extends JFrame {
 		
 		apply = new JButton("Apply");
 		panel.add(apply);
-//	    apply.addActionListener(new applyButtonClickListener());
+
 	      
 	    cancel = new JButton("Cancel");
 	    panel.add(cancel);
@@ -79,7 +80,7 @@ public class AddColumnFrame extends JFrame {
 	    
 	    PK_Yes = new JRadioButton("Yes");
 	    panel_2.add(PK_Yes);
-	    
+
 	    PK_No = new JRadioButton("No");
 	    panel_2.add(PK_No);
 	    
@@ -114,10 +115,111 @@ public class AddColumnFrame extends JFrame {
 	    
 	    Unique_Unknown = new JRadioButton("Unknown");
 	    panel_4.add(Unique_Unknown);
-
+	    
+	    PK_Yes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PK_No.setSelected(false);
+			}
+	    });
+	    
+	    PK_No.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PK_Yes.setSelected(false);
+			}
+	    });
+	    
+	    Null_Yes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Null_No.setSelected(false);
+				Null_Unknown.setSelected(false);
+			}
+	    });
+	    
+	    Null_No.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Null_Yes.setSelected(false);
+				Null_Unknown.setSelected(false);
+			}
+	    });
+	    
+	    Null_Unknown.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Null_Yes.setSelected(false);
+				Null_No.setSelected(false);
+			}
+	    });
+	    
+	    Unique_Yes.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Unique_No.setSelected(false);
+				Unique_Unknown.setSelected(false);
+			}
+	    });
+	    
+	    Unique_No.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Unique_Yes.setSelected(false);
+				Unique_Unknown.setSelected(false);
+			}
+	    });
+	    
+	    Unique_Unknown.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Unique_Yes.setSelected(false);
+				Unique_No.setSelected(false);
+			}
+	    });
+	    
+		apply.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			    tuple[0] = ColumnName.getText();
+			    tuple[1] = DataType.getText();
+			    
+			    if(PK_Yes.isSelected())
+			    	tuple[2] = "Yes";
+			    else if (PK_No.isSelected())
+			    	tuple[2] = "No";
+			    else
+			    	tuple[2] = "Not Selected";
+			    
+			    if(Null_Yes.isSelected())
+			    	tuple[3] = "Yes";
+			    else if(Null_No.isSelected())
+			    	tuple[3] = "No";
+			    else
+			    	tuple[3] = "UnKnown";
+			    
+			    if(Unique_Yes.isSelected())
+			    	tuple[4] = "Yes";
+			    else if(Unique_No.isSelected())
+			    	tuple[4] = "No";
+			    else
+			    	tuple[4] = "Unknown";
+				setVisible(false);
+			}
+		});
+		
+		cancel.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		
 	}
 
-	
+	static Object[] getTuple() {
+		return tuple;
+	}
 //    class applyButtonClickListener implements ActionListener {
 //        public void actionPerformed (ActionEvent e) {
 //           Object[] row = {column.getText(), constraint.getText()};
