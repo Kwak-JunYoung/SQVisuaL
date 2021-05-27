@@ -86,7 +86,7 @@ public class SQLite extends DataProvider {
 			if (r != null) {
 				try {
 					while (r.next()) {
-						rows.add(new MetaRow(r.getString(2), (r.getInt(4) != 0 ? true : false), r.getString(3), -1,
+						rows.add(new MetaRow(r.getString(2), !(r.getInt(4) != 0 || r.getInt(6) == 1), r.getString(3), -1,
 								(r.getInt(6) == 1 ? "PRI" : "")));
 					}
 				} catch (SQLException e1) {

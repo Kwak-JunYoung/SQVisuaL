@@ -169,7 +169,7 @@ public class MainFrame extends JFrame {
 		this.currentTable = currentTable;
 		this.cond = cond;
 		table.clearSelection();
-		String q = "SELECT * FROM " + currentTable;
+		String q = "SELECT * FROM `" + currentTable + "`";
 		if (cond != null)
 			q += " WHERE " + cond;
 		q += ";";

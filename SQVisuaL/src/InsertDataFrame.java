@@ -79,8 +79,7 @@ class InsertDataFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				table.clearSelection();
-				if (table.isEditing())
-					table.getCellEditor().stopCellEditing();
+				//if (table.isEditing()) table.getCellEditor().stopCellEditing();
 				int rc = model.getRowCount();
 				String name = "(", data = "(", q = "INSERT INTO `" + currentTable + "` ";
 				for (int i = 0; i < rc; i++) {
