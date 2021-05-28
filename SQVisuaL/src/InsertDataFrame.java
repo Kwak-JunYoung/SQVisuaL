@@ -80,6 +80,8 @@ class InsertDataFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				table.clearSelection();
+				if (table.isEditing())
+					table.getCellEditor().stopCellEditing();
 				int rc = model.getRowCount();
 				for (int i = 0; i < rc; i++) {
 					if (table.getValueAt(i, 1) == null || table.getValueAt(i, 1).equals("")) {
