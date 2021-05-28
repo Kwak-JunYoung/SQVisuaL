@@ -83,11 +83,12 @@ class InsertDataFrame extends JFrame {
 				int rc = model.getRowCount();
 				for (int i = 0; i < rc; i++) {
 					if (table.getValueAt(i, 1) == null || table.getValueAt(i, 1).equals("")) {
-						if (!table.getValueAt(i, 2).equals("Set to NULL"))
+						if (!table.getValueAt(i, 2).equals("Set to NULL")) {
 							JOptionPane.showMessageDialog(null,
 									"Please set values for all attributes, or set them as NULL.", "Error",
 									JOptionPane.INFORMATION_MESSAGE);
-						return;
+							return;
+						}
 					}
 				}
 				String name = "(", data = "(", q = "INSERT INTO `" + currentTable + "` ";
