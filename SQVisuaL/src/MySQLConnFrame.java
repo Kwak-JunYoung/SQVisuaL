@@ -80,11 +80,10 @@ class MySQLConnFrame extends JFrame {
 		confirm = new JButton("Confirm");
 		panel_5.add(confirm);
 
-		host.setText("covrt.co");
-		port.setText("3306");
-		user.setText("javaproject");
-		pw.setText("javaproject");
-		db.setText("javaprojectdb");
+		/*
+		 * host.setText("covrt.co"); port.setText("3306"); user.setText("javaproject");
+		 * pw.setText("javaproject"); db.setText("javaprojectdb");
+		 */
 
 		this.setSize(410, 400);
 	}
