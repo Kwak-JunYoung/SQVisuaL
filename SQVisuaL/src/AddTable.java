@@ -31,7 +31,7 @@ public class AddTable extends JFrame {
 
 	public AddTable(MainFrame mf, SQVisuaL sql) {
 		acf = new AddColumnFrame(this);
-		dcf = new DeleteColumnFrame();
+		dcf = new DeleteColumnFrame(this);
 		String column[] = { "Column Name", "Data Type", "Primary Key?", "Can be NULL?", "Must be unique?" };
 
 		table = new JTable(new DefaultTableModel(column, 0));
@@ -159,5 +159,14 @@ public class AddTable extends JFrame {
 
 	public void addRow(Object[] tuple) {
 		((DefaultTableModel) this.table.getModel()).addRow(tuple);
+	}
+	
+	public void deleteRow(String name) {
+		for(int i = 0; i < this.table.getRowCount(); i++) {
+			if(this.table.getValueAt(i, 0) != null && this.table.getValueAt(i, 0).equals(name)) {
+				((DefaultTableModel) this.table.getModel()).removeRow(i);
+				return;
+			}
+		}
 	}
 }

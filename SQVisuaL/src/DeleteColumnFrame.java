@@ -16,8 +16,7 @@ public class DeleteColumnFrame extends JFrame {
 	private JButton Apply;
 	private JButton Cancel;
 
-	public DeleteColumnFrame() {
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public DeleteColumnFrame(AddTable at) {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -39,12 +38,14 @@ public class DeleteColumnFrame extends JFrame {
 
 		Apply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				at.deleteRow(ColumnName.getText());
 				setVisible(false);
 			}
 		});
 
 		Cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				setVisible(false);
 			}
 		});
